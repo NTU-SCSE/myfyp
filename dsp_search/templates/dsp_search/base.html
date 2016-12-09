@@ -7,17 +7,22 @@
     <meta charset="UTF-8">
     <title>DSPLearn</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static "dsp_search/css/base.css" %}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    {% block css %}
+    {% endblock %}
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{% static "dsp_search/js/base.js" %}"></script>
-
+    {% block js %}
+    {% endblock %}
   </head>
 
-  <body id="pageTop"  data-spy="scroll" data-target=".navbar" data-offset="60">
+  <body id="pagetop" data-spy="scroll" data-target=".navbar" data-offset="60">
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -26,12 +31,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'homepage' %}">DSPLearn</a>
+          <a class="navbar-brand" href="{% url 'home_page' %}">DSPLearn</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'homepage' %}#about">ABOUT</a></li>
-            <li><a href="{% url 'homepage' %}#books">BOOKS</a></li>
+            <li><a href="{% url 'home_page' %}#about">ABOUT</a></li>
+            <li><a href="{% url 'home_page' %}#books">BOOKS</a></li>
           </ul>
         </div>
       </div>
@@ -39,14 +44,9 @@
 
     {% block content %}
     {% endblock %}
-
   </body>
 
-  <footer class="container-fluid text-center">
-    <a href="#pageTop" title="To Top">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
-    <p>Made By Haihui (<a href="mailto:c130062@e.ntu.edu.sg?Subject=DSPLearn">Email him</a>)</p>
-  </footer>
+  {% block footer %}
+  {% endblock %}
 
 </html>

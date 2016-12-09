@@ -18,7 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$', include('dsp_index.urls')),
+    url(r'^index/', include('dsp_index.urls')),
     url(r'', include('dsp_search.urls')),
 
 ]
