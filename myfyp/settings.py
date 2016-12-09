@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'dsp_index.apps.DspIndexConfig',
+    'dsp_search.apps.DspSearchConfig',
 
     'haystack',
 ]
