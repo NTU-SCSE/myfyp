@@ -7,11 +7,6 @@ def view_home_page(request):
     return render(request, 'dsp_search/home_page.html', {'search_form': form})
 
 
-# def view_search_results(request):
-#     if request.GET.get('q'):
-#
-#     return render(request, 'dsp_search/results_page.html')
-
 class SectionSearchView(SearchView):
     template_name = 'dsp_search/results_page.html'
     form_class = SectionSearchForm
