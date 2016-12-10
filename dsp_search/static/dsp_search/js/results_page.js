@@ -62,9 +62,10 @@ $(document).ready(function(){
   $('#conceptTree').treed();
 
   // Toggle sidebar
-  $("#menu-toggle").click(function(e) {
+  $("#sidebar-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
+    $("#arrow-icon").toggleClass("glyphicon-menu-left glyphicon-menu-right");
   });
 });
 
