@@ -70,6 +70,9 @@ h4 {
 .item span {
   font-style: normal;
 }
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
 .panel {
   border: 1px solid #f4511e;
   border-radius:0 !important;
