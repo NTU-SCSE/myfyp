@@ -1,64 +1,65 @@
+/* Tree Views */
 .tree, .tree ul {
-    margin:0;
-    padding:0;
-    list-style:none
+  margin:0;
+  padding:0;
+  list-style:none
 }
 .tree ul {
-    margin-left:1em;
-    position:relative
+  margin-left:1em;
+  position:relative
 }
 .tree ul ul {
-    margin-left:.5em
+  margin-left:.5em
 }
 .tree ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    border-left:1px solid
+  content:"";
+  display:block;
+  width:0;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  border-left:1px solid
 }
 .tree li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    color: #3f3f3f;
-    position:relative
+  margin:0;
+  padding:0 1em;
+  line-height:2em;
+  color: #3f3f3f;
+  position:relative
 }
 .tree ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
+  content:"";
+  display:block;
+  width:10px;
+  height:0;
+  border-top:1px solid;
+  margin-top:-1px;
+  position:absolute;
+  top:1em;
+  left:0
 }
 .tree ul li:last-child:before {
-    background:#fff;
-    height:auto;
-    top:1em;
-    bottom:0
+  background:#fff;
+  height:auto;
+  top:1em;
+  bottom:0
 }
 .indicator {
-    margin-right:5px;
+  margin-right:5px;
 }
 .tree li a {
-    text-decoration: none;
-    color:#3f3f3f;
+  text-decoration: none;
+  color:#3f3f3f;
 }
 .tree li button, .tree li button:active, .tree li button:focus {
-    text-decoration: none;
-    color:#3f3f3f;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
-    outline: 0;
+  text-decoration: none;
+  color:#3f3f3f;
+  border:none;
+  background:transparent;
+  margin: 0;
+  padding: 0;
+  outline: 0;
 }
 /* Sharp Buttons */
 .sharp {
@@ -66,108 +67,108 @@
 }
 .btn-sidebar {
   background-color: #ededed;
-	border: 0 none;
+  border: 0 none;
 }
 .btn:focus {
   outline: none;
 }
 /* Toggle Styles */
 #wrapper {
-    margin-top: 108px;
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+  margin-top: 108px;
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 #wrapper.toggled {
-    padding-left: 250px;
+  padding-left: 250px;
 }
 #sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #fff;
-    border-right: 5px solid #ededed;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 5px solid #ededed;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+  width: 250px;
 }
 #page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
+  width: 100%;
+  position: absolute;
+  padding: 15px;
 }
 #wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -300px;
+  position: absolute;
+  margin-right: -300px;
 }
 /* Sidebar Styles */
 .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 300px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  position: absolute;
+  top: 0;
+  width: 300px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
+  display: block;
+  text-decoration: none;
+  color: #999999;
 }
 .sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.2);
 }
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
-    text-decoration: none;
+  text-decoration: none;
 }
 .sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    font-weight: 700;
-    color: #f4511e;
-    line-height: 60px;
+  height: 65px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f4511e;
+  line-height: 60px;
 }
 .sidebar-nav > .sidebar-brand a {
-    color: #000;
+  color: #000;
 }
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
+  color: #fff;
+  background: none;
 }
 @media(min-width:768px) {
-    #wrapper {
-        padding-left: 300px;
-    }
-    #wrapper.toggled {
-        padding-left: 0;
-    }
-    #sidebar-wrapper {
-        width: 300px;
-    }
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-    #page-content-wrapper {
-        padding-top: 0;
-        padding-left: 20px;
-        padding-right: 20px;
-        position: relative;
-    }
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
+  #wrapper {
+      padding-left: 320px;
+  }
+  #wrapper.toggled {
+      padding-left: 0;
+  }
+  #sidebar-wrapper {
+      width: 320px;
+  }
+  #wrapper.toggled #sidebar-wrapper {
+      width: 0;
+  }
+  #page-content-wrapper {
+      padding-top: 0;
+      padding-left: 20px;
+      padding-right: 20px;
+      position: relative;
+  }
+  #wrapper.toggled #page-content-wrapper {
+      position: relative;
+      margin-right: 0;
+  }
 }

@@ -15,31 +15,30 @@ $.fn.extend({
     }
 
     // Initialize each of the top levels
-    var tree = $(this);
-    tree.addClass("tree");
-    tree.find('li').has("ul").each(function () {
-      var branch = $(this); //li with children ul
-      branch.prepend("<i class='indicator glyphicon " + openedClass + "'></i>");
-      branch.addClass('branch');
-      branch.on('click', function (e) {
+    var $tree = $(this);
+    $tree.addClass("tree");
+    $tree.find('li').has("ul").each(function () {
+      var $branch = $(this); //li with children ul
+      $branch.prepend("<i class='indicator glyphicon " + openedClass + "'></i>");
+      $branch.addClass('branch');
+      $branch.on('click', function (e) {
         if (this == e.target) {
           var icon = $(this).children('i:first');
           icon.toggleClass(openedClass + " " + closedClass);
           $(this).children().children().toggle();
         }
       });
-      // branch.children().children().toggle();
     });
 
     // Fire event from the dynamically added icon
-    tree.find('.branch .indicator').each(function(){
+    $tree.find('.branch .indicator').each(function(){
       $(this).on('click', function () {
         $(this).closest('li').click();
       });
     });
 
     // Fire event to open branch if the li contains an anchor instead of text
-    tree.find('.branch>a').each(function () {
+    $tree.find('.branch>a').each(function () {
       $(this).on('click', function (e) {
         $(this).closest('li').click();
         e.preventDefault();
@@ -47,7 +46,7 @@ $.fn.extend({
     });
 
     // Fire event to open branch if the li contains a button instead of text
-    tree.find('.branch>button').each(function () {
+    $tree.find('.branch>button').each(function () {
       $(this).on('click', function (e) {
         $(this).closest('li').click();
         e.preventDefault();
@@ -61,11 +60,34 @@ $(document).ready(function(){
   // Initialization of treeviews
   $('#conceptTree').treed();
 
-  // Toggle sidebar
-  $("#sidebar-toggle").click(function(e) {
+  var $window = $(window);
+  var lastWindowWidth = $window.width();
+  var $icon = $('#arrow-icon');
+  var breakpoint = 768;
+
+  // Add class based on screen size
+  if(lastWindowWidth < breakpoint) {
+    $icon.addClass('glyphicon-menu-right');
+  } else {
+    $icon.addClass('glyphicon-menu-left');
+  }
+
+  // Toggle sidebar on screen size change
+  $window.on('resize', function(){
+    var windowWidth = $window.width();
+    if (lastWindowWidth !== windowWidth) {
+      if ((lastWindowWidth < breakpoint && windowWidth >= breakpoint) || (lastWindowWidth >= breakpoint && windowWidth < breakpoint)) {
+        $icon.toggleClass('glyphicon-menu-left glyphicon-menu-right');
+      }
+      lastWindowWidth = windowWidth;
+    }
+  });
+
+  // Toggle sidebar on click
+  $('#sidebar-toggle').click(function(e) {
     e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
-    $("#arrow-icon").toggleClass("glyphicon-menu-left glyphicon-menu-right");
+    $('#wrapper').toggleClass('toggled');
+    $icon.toggleClass('glyphicon-menu-left glyphicon-menu-right');
   });
 });
 

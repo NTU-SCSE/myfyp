@@ -76,7 +76,7 @@ h4 {
   transition: box-shadow 0.5s;
 }
 .panel:hover {
-  box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  box-shadow: 5px 0 40px rgba(0,0,0, .2);
 }
 .panel-footer .btn:hover {
   border: 1px solid #f4511e;
@@ -88,10 +88,10 @@ h4 {
   background-color: #f4511e !important;
   padding: 25px;
   border-bottom: 1px solid transparent;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .panel-footer {
   background-color: white !important;
