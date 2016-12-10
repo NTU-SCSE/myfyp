@@ -4,11 +4,11 @@
   <div class="jumbotron text-center">
     <h1>DSPLearn</h1>
     <p>Making learning easier and faster with DSP ontology</p>
-    <form class="form-inline">
+    <form class="form-inline" action="{% url 'results_page' %}" method="get">
       <div class="input-group">
-        <input type="email" class="form-control" size="50" placeholder="Type here..." required>
+        {{ search_form }}
         <div class="input-group-btn">
-          <button type="button" class="btn btn-danger">Search</button>
+          <button type="submit" class="btn btn-danger">Search</button>
         </div>
       </div>
     </form>

@@ -15,11 +15,11 @@
 {% block content %}
 
   <div class="search-bar text-center navbar-fixed-top">
-    <form class="form-inline">
+    <form class="form-inline" action="{% url 'results_page' %}" method="get">
       <div class="input-group">
-        <input type="email" class="form-control" size="50" placeholder="Type here..." required>
+        <input type="search" class="form-control" size="50" placeholder="Type here..." name="q" required>
         <div class="input-group-btn">
-          <button type="button" class="btn btn-danger">Search</button>
+          <button type="submit" class="btn btn-danger">Search</button>
         </div>
       </div>
     </form>
@@ -61,7 +61,17 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+{#            <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>#}
+            {% if query %}
+              <h3>Results</h3>
+              {% for result in object_list %}
+                <p>{{ result.object.text }}</p>
+              {% empty %}
+                <p>No results found.</p>
+              {% endfor %}
+            {% else %}
+              No query found.
+            {% endif %}
           </div>
         </div>
       </div>
