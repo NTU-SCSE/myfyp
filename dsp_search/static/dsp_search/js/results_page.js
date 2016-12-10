@@ -21,19 +21,13 @@ $.fn.extend({
       var $branch = $(this); //li with children ul
       $branch.prepend("<i class='indicator glyphicon " + openedClass + "'></i>");
       $branch.addClass('branch');
-      $branch.on('click', function (e) {
-        if (this == e.target) {
-          var icon = $(this).children('i:first');
-          icon.toggleClass(openedClass + " " + closedClass);
-          $(this).children().children().toggle();
-        }
-      });
     });
 
     // Fire event from the dynamically added icon
     $tree.find('.branch .indicator').each(function(){
       $(this).on('click', function () {
-        $(this).closest('li').click();
+        $(this).toggleClass(openedClass + " " + closedClass);
+        $(this).closest('li').children().children().toggle();
       });
     });
 
