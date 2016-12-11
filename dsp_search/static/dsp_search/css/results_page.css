@@ -68,11 +68,17 @@
 .btn-sidebar {
   background-color: #ededed;
   border: 0 none;
+  padding: 3px 6px;
 }
 .btn:focus {
   outline: none;
 }
 /* Toggle Styles */
+#sidebar-toggle {
+  position: fixed;
+  z-index: 1;
+  margin-top: 20px;
+}
 #wrapper {
   margin-top: 108px;
   padding-left: 0;
@@ -85,7 +91,7 @@
   padding-left: 250px;
 }
 #sidebar-wrapper {
-  z-index: 1000;
+  z-index: 1;
   position: fixed;
   left: 250px;
   width: 0;

@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'dsp_database',
         'USER': 'mysql-client',
         'PASSWORD': 'password',
-        'HOST': '192.168.1.107',
+        'HOST': '192.168.1.105',
         'PORT': '3306',
     }
 }
@@ -131,6 +131,6 @@ STATIC_URL = '/static/'
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://192.168.1.107:8983/solr/dsp_collection'
+        'URL': 'http://192.168.1.105:8983/solr/dsp_collection'
     },
 }
