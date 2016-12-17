@@ -11,3 +11,12 @@ class SectionSearchView(SearchView):
     template_name = 'dsp_search/results_page.html'
     form_class = SectionSearchForm
     form_name = 'search_form'
+
+    def get_results_count(self):
+        queryset = super(SectionSearchView, self).get_queryset()
+        return queryset.count()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(SectionSearchView, self).get_context_data(*args, **kwargs)
+        context.update({'count': self.get_results_count()})
+        return context
