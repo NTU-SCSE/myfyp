@@ -1,6 +1,6 @@
 {% extends 'dsp_search/base.html' %}
 {% load static %}
-
+{% load highlight %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static "dsp_search/css/results_page.css" %}">
@@ -68,7 +68,7 @@
             {% if query %}
               <h3>Results</h3>
               {% for result in object_list %}
-                <p>{{ result.object.text }}</p>
+                <p>{% highlight result.object.text with query max_length 400  css_class "highlighted" %}</p>
               {% empty %}
                 <p>No results found.</p>
               {% endfor %}

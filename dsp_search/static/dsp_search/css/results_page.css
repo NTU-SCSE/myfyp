@@ -61,6 +61,11 @@
   padding: 0;
   outline: 0;
 }
+/* Highlight */
+.highlighted {
+  font-weight: bold;
+  font-style: italic;
+}
 /* Sharp Buttons */
 .sharp {
   border-radius:0;
