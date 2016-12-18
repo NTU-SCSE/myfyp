@@ -75,7 +75,7 @@
                     <div class="alert alert-success"> Page {{ page_obj.number }} of {{ count }} results </div>
                   {% endif %}
                 {% endif %}
-                <p>{% highlight result.object.text with query  max_length 400  css_class "highlighted" %}</p>
+                <p>{% highlight result.object.text with query  max_length 500  css_class "highlighted" %}</p>
               {% empty %}
                 <div class="alert alert-warning"> No results found </div>
               {% endfor %}
