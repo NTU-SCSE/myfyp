@@ -51,26 +51,6 @@ p {
   color: #f4511e;
   font-size: 200px;
 }
-.thumbnail {
-  padding: 0 0 15px 0;
-  border: none;
-  border-radius: 0;
-}
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  margin-bottom: 10px;
-}
-.carousel-control.right, .carousel-control.left {
-  background-image: none;
-  color: #f4511e;
-}
-.carousel-indicators li {
-  border-color: #f4511e;
-}
-.carousel-indicators li.active {
-  background-color: #f4511e;
-}
 .item h4 {
   font-size: 19px;
   line-height: 1.375em;
@@ -83,44 +63,6 @@ p {
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #ffffff;
-}
-.panel {
-  border: 1px solid #f4511e;
-  border-radius:0 !important;
-  transition: box-shadow 0.5s;
-}
-.panel:hover {
-  box-shadow: 5px 0 40px rgba(0,0,0, .2);
-}
-.panel-footer .btn:hover {
-  border: 1px solid #f4511e;
-  background-color: #fff !important;
-  color: #f4511e;
-}
-.panel-heading {
-  color: #fff !important;
-  background-color: #f4511e !important;
-  padding: 25px;
-  border-bottom: 1px solid transparent;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.panel-footer {
-  background-color: white !important;
-}
-.panel-footer h3 {
-  font-size: 32px;
-}
-.panel-footer h4 {
-  color: #aaa;
-  font-size: 14px;
-}
-.panel-footer .btn {
-  margin: 15px 0;
-  background-color: #f4511e;
-  color: #fff;
 }
 .navbar {
   margin-bottom: 0;
@@ -148,34 +90,6 @@ footer .glyphicon {
   font-size: 20px;
   margin-bottom: 20px;
   color: #f4511e;
-}
-.slideanim {visibility:hidden;}
-.slide {
-  animation-name: slide;
-  -webkit-animation-name: slide;
-  animation-duration: 1s;
-  -webkit-animation-duration: 1s;
-  visibility: visible;
-}
-@keyframes slide {
-0% {
-  opacity: 0;
-  transform: translateY(70%);
-}
-100% {
-  opacity: 1;
-  transform: translateY(0%);
-}
-}
-@-webkit-keyframes slide {
-0% {
-  opacity: 0;
-  -webkit-transform: translateY(70%);
-}
-100% {
-  opacity: 1;
-  -webkit-transform: translateY(0%);
-}
 }
 @media screen and (max-width: 768px) {
   .col-sm-4 {
