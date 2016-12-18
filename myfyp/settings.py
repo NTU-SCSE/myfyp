@@ -128,9 +128,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# Haystack settings
+# http://django-haystack.readthedocs.io/en/v2.5.1/settings.html
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
         'URL': 'http://192.168.56.101:8983/solr/dsp_collection'
     },
 }
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10

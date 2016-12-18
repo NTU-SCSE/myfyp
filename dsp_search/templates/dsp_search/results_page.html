@@ -66,22 +66,50 @@
         <div class="row">
           <div class="col-lg-12">
             {% if query %}
-              {% if object_list %}
-                <div class="alert alert-success"> {{ count }} results found. </div>
-                {% for result in object_list %}
-                  <p>{% highlight result.object.text with query  max_length 400  css_class "highlighted" %}</p>
-                {% endfor %}
-              {% else %}
-                <div class="alert alert-warning"> No results found. </div>
+              <!-- Current Page -->
+              {% for result in page_obj.object_list %}
+                {% if forloop.first %}
+                  {% if page_obj.number == 1 %}
+                    <div class="alert alert-success"> {{ count }} results found </div>
+                  {% else %}
+                    <div class="alert alert-success"> Page {{ page_obj.number }} of {{ count }} results </div>
+                  {% endif %}
+                {% endif %}
+                <p>{% highlight result.object.text with query  max_length 400  css_class "highlighted" %}</p>
+              {% empty %}
+                <div class="alert alert-warning"> No results found </div>
+              {% endfor %}
+              <!-- End of Current Page -->
+              <!-- Page Navigation -->
+              {% if page_obj.has_previous or page_obj.has_next %}
+                <div>
+                  {% if page_obj.has_previous %}
+                    <a href="?q={{ query }}&amp;page={{ page_obj.previous_page_number }}">
+                  {% endif %}
+                  &laquo; Previous
+                  {% if page_obj.has_previous %}
+                    </a>
+                  {% endif %}
+                  |
+                  {% if page_obj.has_next %}
+                    <a href="?q={{ query }}&amp;page={{ page_obj.next_page_number }}">
+                  {% endif %}
+                  Next &raquo;
+                  {% if page_obj.has_next %}
+                    </a>
+                  {% endif %}
+                </div>
               {% endif %}
+              <!-- End of Pagination -->
             {% else %}
-              <div class="alert alert-danger"> No query found. </div>
+              <div class="alert alert-danger"> No query found </div>
             {% endif %}
           </div>
         </div>
       </div>
     </div>
     <!-- /#page-content-wrapper -->
+
   </div>
   <!-- /#wrapper -->
 
