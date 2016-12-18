@@ -1,6 +1,7 @@
 {% extends 'dsp_search/base.html' %}
 {% load static %}
 {% load highlight %}
+{% load dsp_search_extras %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static "dsp_search/css/results_page.css" %}">
@@ -75,7 +76,15 @@
                     <div class="alert alert-success"> Page {{ page_obj.number }} of {{ count }} results </div>
                   {% endif %}
                 {% endif %}
-                <p>{% highlight result.object.text with query  max_length 500  css_class "highlighted" %}</p>
+                <div>
+                  <h4><a href="#">{{ result.object.title }}</a></h4>
+                  <h6>Book: <a href="#">{{ result.object.book.title }}</a></h6>
+                  <p>
+                    {% filter replace:"[FORMULA]" %}
+                      {% highlight result.object.text with query  max_length 500  css_class "highlighted" %}
+                    {% endfilter %}
+                  </p>
+                </div>
               {% empty %}
                 <div class="alert alert-warning"> No results found </div>
               {% endfor %}
