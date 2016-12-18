@@ -1,0 +1,64 @@
+{% extends 'dsp_search/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_pages.css" %}">
+{% endblock %}
+
+
+{% block js %}
+  <script src="{% static "dsp_search/js/results_details_pages.js" %}"></script>
+{% endblock %}
+
+
+{% block content %}
+  <div class="search-bar text-center navbar-fixed-top">
+      <form class="form-inline" action="{% url 'results_page' %}" method="get">
+      <div class="input-group">
+        {{ search_form }}
+        <div class="input-group-btn">
+          <button type="submit" class="btn btn-danger">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar-nav" id="conceptTree">
+        <li class="sidebar-brand">
+          Concept Tree
+        </li>
+      </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <button type="button" class="btn btn-sidebar sharp" id="sidebar-toggle">
+      <span class="glyphicon" id="arrow-icon"></span>
+    </button>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+{% endblock %}
+
+
+{% block footer %}
+  <footer class="container-fluid text-right">
+    <a href="#pagetop" title="To Top">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+  </footer>
+{% endblock %}

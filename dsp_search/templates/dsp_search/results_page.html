@@ -4,12 +4,12 @@
 {% load dsp_search_extras %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static "dsp_search/css/results_page.css" %}">
+  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_pages.css" %}">
 {% endblock %}
 
 
 {% block js %}
-  <script src="{% static "dsp_search/js/results_page.js" %}"></script>
+  <script src="{% static "dsp_search/js/results_details_pages.js" %}"></script>
 {% endblock %}
 
 
@@ -77,7 +77,7 @@
                   {% endif %}
                 {% endif %}
                 <div>
-                  <h4><a href="#">{{ result.object.title }}</a></h4>
+                  <h4><a href="{% url 'details_page' %}">{{ result.object.title }}</a></h4>
                   <h6>Book: <a href="#">{{ result.object.book.title }}</a></h6>
                   <p>
                     {% filter replace:"[FORMULA]" %}
@@ -89,6 +89,14 @@
                 <div class="alert alert-warning"> No results found </div>
               {% endfor %}
               <!-- End of Current Page -->
+            {% else %}
+              <div class="alert alert-danger"> No query found </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            {% if query %}
               <!-- Page Navigation -->
               {% if page_obj.has_previous or page_obj.has_next %}
                 <div>
@@ -110,16 +118,21 @@
                 </div>
               {% endif %}
               <!-- End of Pagination -->
-            {% else %}
-              <div class="alert alert-danger"> No query found </div>
             {% endif %}
           </div>
         </div>
       </div>
     </div>
     <!-- /#page-content-wrapper -->
-
   </div>
   <!-- /#wrapper -->
+{% endblock %}
 
+
+{% block footer %}
+  <footer class="container-fluid text-right">
+    <a href="#pagetop" title="To Top">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+  </footer>
 {% endblock %}

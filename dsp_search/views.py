@@ -20,3 +20,9 @@ class SectionSearchView(SearchView):
         context = super(SectionSearchView, self).get_context_data(*args, **kwargs)
         context.update({'count': self.get_results_count()})
         return context
+
+
+class SectionDetailsView(SearchView):
+    template_name = 'dsp_search/details_page.html'
+    form_class = SectionSearchForm
+    form_name = 'search_form'
