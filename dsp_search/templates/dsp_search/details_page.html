@@ -3,11 +3,13 @@
 
 {% block css %}
   <link rel="stylesheet" href="{% static "dsp_search/css/results_details_pages.css" %}">
+  <link rel="stylesheet" href="{% static "dsp_search/css/details_page.css" %}">
 {% endblock %}
 
 
 {% block js %}
   <script src="{% static "dsp_search/js/results_details_pages.js" %}"></script>
+  <script src="{% static "dsp_search/js/details_page.js" %}"></script>
 {% endblock %}
 
 
@@ -43,8 +45,8 @@
     <div id="page-content-wrapper">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-12">
-          </div>
+          <object id="pdfViewer" class="col-lg-12 well" type="text/html" data="{% url 'pdf_viewer' %}?file=http://127.0.0.1:8000/static/dsp_search/pdfjs-1.5.188/web/pdf-sample.pdf">
+          </object>
         </div>
       </div>
     </div>
@@ -54,11 +56,3 @@
   <!-- /#wrapper -->
 {% endblock %}
 
-
-{% block footer %}
-  <footer class="container-fluid text-right">
-    <a href="#pagetop" title="To Top">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </a>
-  </footer>
-{% endblock %}

@@ -26,3 +26,7 @@ class SectionDetailsView(SearchView):
     template_name = 'dsp_search/details_page.html'
     form_class = SectionSearchForm
     form_name = 'search_form'
+
+
+def view_pdf(request):
+    return render(request, 'dsp_search/pdf_viewer.html')
