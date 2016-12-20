@@ -8115,8 +8115,8 @@ function webViewerInitialized() {
   appConfig.toolbar.presentationModeButton.addEventListener('click',
     SecondaryToolbar.presentationModeClick.bind(SecondaryToolbar));
 
-  appConfig.toolbar.openFile.addEventListener('click',
-    SecondaryToolbar.openFileClick.bind(SecondaryToolbar));
+  // appConfig.toolbar.openFile.addEventListener('click',
+  //   SecondaryToolbar.openFileClick.bind(SecondaryToolbar));
 
   appConfig.toolbar.print.addEventListener('click',
     SecondaryToolbar.printClick.bind(SecondaryToolbar));
@@ -8275,10 +8275,10 @@ window.addEventListener('updateviewarea', function (evt) {
       }).catch(function() { /* unable to write to storage */ });
     });
   }
-  var href =
-    PDFViewerApplication.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
-  PDFViewerApplication.appConfig.toolbar.viewBookmark.href = href;
-  PDFViewerApplication.appConfig.secondaryToolbar.viewBookmark.href = href;
+  // var href =
+  //   PDFViewerApplication.pdfLinkService.getAnchorUrl(location.pdfOpenParams);
+  // PDFViewerApplication.appConfig.toolbar.viewBookmark.href = href;
+  // PDFViewerApplication.appConfig.secondaryToolbar.viewBookmark.href = href;
 
   // Update the current bookmark in the browsing history.
   PDFViewerApplication.pdfHistory.updateCurrentBookmark(location.pdfOpenParams,
