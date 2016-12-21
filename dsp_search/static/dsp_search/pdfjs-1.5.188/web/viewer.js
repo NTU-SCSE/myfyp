@@ -16,7 +16,7 @@
 
 'use strict';
 
-var DEFAULT_URL = 'pdf-sample.pdf';
+var DEFAULT_URL = '';
 
   var pdfjsWebLibs = {
     pdfjsWebPDFJS: window.pdfjsDistBuildPdf
