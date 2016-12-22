@@ -18,11 +18,11 @@
 
 var DEFAULT_URL = '';
 
-  var pdfjsWebLibs = {
-    pdfjsWebPDFJS: window.pdfjsDistBuildPdf
-  };
+var pdfjsWebLibs = {
+  pdfjsWebPDFJS: window.pdfjsDistBuildPdf
+};
   
-  (function () {
+(function () {
 
 
 (function (root, factory) {
@@ -8900,5 +8900,3 @@ function webViewerLoad() {
 }
 
 document.addEventListener('DOMContentLoaded', webViewerLoad, true);
-
-

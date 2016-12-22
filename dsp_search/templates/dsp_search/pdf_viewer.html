@@ -3,25 +3,29 @@
 <!DOCTYPE html>
 <html dir="ltr" mozdisallowselectionprint moznomarginboxes>
 
- <head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="google" content="notranslate">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>PDF.js viewer</title>
 
-
-    <link rel="stylesheet" href="{% static "dsp_search/pdfjs-1.5.188/web/viewer.css" %}">
-
+    <!-- Translation Files-->
     <link rel="resource" type="application/l10n" href="{% static "dsp_search/pdfjs-1.5.188/web/locale/locale.properties" %}">
+    <!-- Localization-->
     <script src="{% static "dsp_search/pdfjs-1.5.188/web/l10n.js" %}"></script>
 
+    <!-- PDF.js Display Layer Script-->
+    <!-- The display layer script will load the core layer script pdf.worker.js. -->
     <script src="{% static "dsp_search/pdfjs-1.5.188/build/pdf.js" %}"></script>
-    <script type="text/javascript">
-      PDFJS.workerSrc = "{% static "dsp_search/pdfjs-1.5.188/build/pdf.worker.js" %}";
+
+    <!-- PDF.js Viewer Layer Scripts & Styles -->
+    <script src="{% static "dsp_search/js/pdf_viewer.js" %}"></script>
+    <link rel="stylesheet" href="{% static "dsp_search/css/pdf_viewer.css" %}">
+    <script>
+      pdfjsWebLibs.pdfjsWebApp.PDFViewerApplication.open('{{ pdf_url }}');
     </script>
 
-    <script src="{% static "dsp_search/pdfjs-1.5.188/web/viewer.js" %}"></script>
   </head>
 
 
