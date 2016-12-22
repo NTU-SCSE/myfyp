@@ -59,20 +59,20 @@ class PDFView(TemplateView):
             config = json.loads(file.read().replace('\n', ''))
         return config
 
-    def send_request(self):
+    def send_request(self, book_id, start_page, end_page):
         config = self.get_config()
         url = "{base}book/read/{book_id}/{start}/{end}/".format(base=config['base_url'],
-                                                                book_id=self.kwargs['book'],
-                                                                start=self.kwargs['start'],
-                                                                end=self.kwargs['end'])
+                                                                book_id=book_id,
+                                                                start=start_page,
+                                                                end=end_page)
         response = requests.get(url, stream=True, auth=(config['auth_args'][0], config['auth_args'][1]))
         return response
 
-    def save_pdf(self):
-        response = self.send_request()
-        filename = "{book_id}_{start}_{end}.pdf".format(book_id=self.kwargs['book'],
-                                                        start=self.kwargs['start'],
-                                                        end=self.kwargs['end'])
+    def save_pdf(self, book_id, start_page, end_page):
+        response = self.send_request(book_id, start_page, end_page)
+        filename = "{book_id}_{start}_{end}.pdf".format(book_id=book_id,
+                                                        start=start_page,
+                                                        end=end_page)
         filepath = os.path.join(settings.MEDIA_ROOT, filename)
         with open(filepath, 'wb+') as file:
             for chunk in response.iter_content(chunk_size=1024):
@@ -83,6 +83,6 @@ class PDFView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(PDFView, self).get_context_data(*args, **kwargs)
-        file_url = self.save_pdf()
+        file_url = self.save_pdf(self.kwargs['book'], self.kwargs['start'], self.kwargs['end'])
         context.update({'pdf_url': file_url})
         return context
