@@ -64,6 +64,9 @@ p {
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #ffffff;
 }
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background-color: rgba(0,0,0,.075);;
+}
 .navbar {
   margin-bottom: 0;
   background-color: #f4511e;

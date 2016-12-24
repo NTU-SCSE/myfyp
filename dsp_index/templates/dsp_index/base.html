@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" id="pagetop">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>DSPLearn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static "dsp_index/css/base.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    {% block css %}
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static "dsp_index/js/base.js" %}"></script>
+    {% block js %}
+    {% endblock %}
+  </head>
+
+  <body>
+
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" id="sidebar-toggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home_page' %}">DSPLearn</a>
+            <h4 class="site-name">| Admin Site</h4>
+          </div>
+          <div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="text-center" href="{% url 'login_page' %}">Sign in</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+           <ul class="nav sidebar-nav">
+            <li><a href="{% url 'crawl_page' %}">Crawl from Document Server</a></li>
+            <li><a href="{% url 'crawl_page' %}">Index into Solr</a></li>
+          </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-12">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    {% block content %}
+    {% endblock %}
+  </body>
+
+  {% block footer %}
+  {% endblock %}
+
+</html>
