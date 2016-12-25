@@ -1,0 +1,26 @@
+{% extends 'dsp_index/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="row">
+  <div class="tab-content col-lg-8">
+    <div id="crawl" class="tab-pane fade in active">
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary pull-right">Start Crawling</button>
+      </form>
+    </div>
+    <div id="index" class="tab-pane fade">
+      <p>Index...</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

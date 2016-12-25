@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('#wrapper').toggleClass('toggled');
   });
 
+  // Expand sidebar on big window size
   $(window).on('resize', function(){
     const breakpoint = 768;
     const windowWidth = $(window).width();

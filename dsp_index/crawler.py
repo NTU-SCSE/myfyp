@@ -1,13 +1,9 @@
-from pdf_client import config
 from pdf_client.api import book, section
 from pdf_client.multithread.processor import TextProcessor
 from pdf_client.multithread.worker import MultiThreadWorker
 from .models import Book, Section
 from myfyp.logger import setup_logger
 
-
-# Load crawling configurations
-config.load_from_file('dsp_index/config.json')
 
 # Set up INFO-level logger
 logger = setup_logger(__name__)
