@@ -1,22 +1,23 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-from .crawler import crawl_books, crawl_sections
 from .forms import CrawlForm
-#
-# def crawl(request):
-#     book_id_list = crawl_books()
-#     crawl_sections(book_id_list=book_id_list, source_version=3)
-#     return HttpResponse("successfully crawled.")
+from .models import Book, Section
+
 
 class AdminView(FormView):
     template_name = 'dsp_index/admin_page.html'
     form_class = CrawlForm
-    success_url = '/admin/crawl/'
+    success_url = '/admin/'
 
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
+        """This method is called when valid form data has been POSTed."""
+        # Delete all the entries in database
+        Book.objects.all().delete()
+        Section.objects.all().delete()
+        # Crawl books
+        form.get_books()
+        # Crawl sections
+        form.get_sections()
         return super(AdminView, self).form_valid(form)
 
 

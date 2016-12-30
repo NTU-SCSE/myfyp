@@ -15,7 +15,11 @@
             {{ field }}
           </div>
         {% endfor %}
-        <button type="submit" class="btn btn-primary pull-right">Start Crawling</button>
+        <button type="submit"
+                onclick="return confirm('Data would be erased and crawled again. Would you like to continue?')"
+                class="btn btn-primary pull-right">
+          Start Crawling
+        </button>
       </form>
     </div>
     <div id="index" class="tab-pane fade">
