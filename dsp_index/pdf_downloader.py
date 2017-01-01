@@ -1,4 +1,4 @@
-from pdf_client.api import section
+from pdf_client.api import section, book
 import json, requests, os
 from django.conf import settings
 
@@ -8,8 +8,13 @@ config_file = 'dsp_index/config.json'
 
 def locate_section(section_id):
     section_detail = section.Detail(section_id).execute()
-    next_section_detail = section.Detail(section_detail['next']).execute()
-    return section_detail['book'], section_detail['page'], next_section_detail['page']
+    if section_detail['next'] is not None:
+        next_section_detail = section.Detail(section_detail['next']).execute()
+        end_page = next_section_detail['page']
+    else:
+        book_detail = book.Detail(section_detail['book']).execute()
+        end_page = book_detail['pages'] - 1
+    return section_detail['book'], section_detail['page'], end_page
 
 
 def get_config():

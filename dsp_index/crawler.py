@@ -1,3 +1,5 @@
+import logging
+import pdf_client
 from pdf_client.api import book, section
 from pdf_client.multithread.processor import TextProcessor
 from pdf_client.multithread.worker import MultiThreadWorker
@@ -7,7 +9,9 @@ from .pdf_downloader import download_a_book, download_a_section
 
 
 # Set up INFO-level logger
+# Disable 'propagate' property from pdf_client logger
 logger = setup_logger(__name__)
+logging.getLogger(pdf_client.multithread.worker.__name__).propagate = False
 
 
 def crawl_books(book_id_list):
