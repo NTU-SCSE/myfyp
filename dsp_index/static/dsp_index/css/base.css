@@ -35,6 +35,14 @@ a {
   color: #4A8AF4;
   font-size: 200px;
 }
+.form-group {
+  margin-top: 15px;
+}
+.alert {
+  margin-top: 55px;
+  border: 0;
+  padding: 10px;
+}
 .item h4 {
   font-size: 19px;
   line-height: 1.375em;

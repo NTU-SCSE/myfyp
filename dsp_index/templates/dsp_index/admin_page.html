@@ -2,10 +2,19 @@
 {% load static %}
 
 
+{% block more_js %}
+  <script type="text/javascript">
+    var crawl_task_id = '{{ request.session.crawl_task_id }}';
+  </script>
+  <script src="{% static "dsp_index/js/poll_state.js" %}"></script>
+{% endblock %}
+
+
 {% block content %}
 <div class="row">
   <div class="tab-content col-lg-8">
     <div id="crawl" class="tab-pane fade in active">
+      <span id="last-crawl" class="label label-default"></span>
       <form action="" method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -15,12 +24,12 @@
             {{ field }}
           </div>
         {% endfor %}
-        <button type="submit"
-                onclick="return confirm('Data would be erased and crawled again. Would you like to continue?')"
-                class="btn btn-primary pull-right">
+        <button type="submit" class="btn btn-primary pull-right"
+                onclick="return confirm('Data would be erased and crawled again. Would you like to continue?')">
           Start Crawling
         </button>
       </form>
+      <div id="status-div"></div>
     </div>
     <div id="index" class="tab-pane fade">
       <p>Index...</p>

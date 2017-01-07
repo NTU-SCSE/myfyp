@@ -1,19 +1,33 @@
 from celery.decorators import task
-from celery.utils.log import get_task_logger
+from myfyp.logger import setup_logger
 from .crawler import crawl_books, crawl_sections
+import time
+from django.core.cache import cache
+from datetime import datetime
 
 
-logger = get_task_logger(__name__)
+logger = setup_logger(__name__)
 
 
-@task(name="crawl_books")
-def crawl_books_task(book_id_list):
-    logger.info("Crawling books")
-    crawl_books(book_id_list)
-
-
-@task(name="crawl_sections")
-def crawl_sections_task(book_id_list, version):
-    logger.info("Crawling sections")
-    crawl_sections(book_id_list, version)
+@task(bind=True)
+def crawl_task(self, book_id_list, version):
+    lock_id = '{0}-lock'.format(self.name)
+    acquire_lock = lambda: cache.add(lock_id, 'true')  # cache.add fails if the key already exists
+    release_lock = lambda: cache.delete(lock_id)
+    if acquire_lock():
+        try:
+            # print("start 10 sec")
+            # time.sleep(10)
+            # print("after 10 sec")
+            crawl_books(book_id_list)
+            crawl_sections(book_id_list, version)
+        finally:
+            release_lock()
+        logger.info('All documents are successfully crawled.')
+        cache.set('last_crawl_time', datetime.now().strftime("%I:%M %p on %d %B %Y"), None)
+        cache.set('last_crawl_tid', self.request.id, None)
+        return cache.get('last_crawl_tid')
+    else:
+        logger.info("Another crawling process is running.")
+        return None
 

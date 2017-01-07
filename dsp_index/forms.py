@@ -1,6 +1,6 @@
 from django import forms
 from pdf_client.api import book, version
-from .tasks import crawl_books_task, crawl_sections_task
+from .tasks import crawl_task
 
 
 def get_book_options():
@@ -24,8 +24,6 @@ class CrawlForm(forms.Form):
     version = forms.ChoiceField(choices=VERSION_OPTIONS,
                                 widget=forms.Select(attrs={'class': 'form-control'}))
 
-    def get_books(self):
-        crawl_books_task.delay(list(map(int, self.cleaned_data['books'])))
-
-    def get_sections(self):
-        crawl_sections_task.delay(self.cleaned_data['books'], self.cleaned_data['version'])
+    def crawl(self):
+        task = crawl_task.delay(self.cleaned_data['books'], self.cleaned_data['version'])
+        return task
