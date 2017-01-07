@@ -3,7 +3,6 @@ from django.views.generic.edit import FormView
 from django.http import HttpResponse
 from django.core.cache import cache
 from .forms import CrawlForm
-from .models import Book, Section
 from celery.result import AsyncResult
 import json
 
@@ -17,9 +16,6 @@ class AdminView(FormView):
 
     def form_valid(self, form):
         """This method is called when valid form data has been POSTed."""
-        # Delete all the entries in database
-        Book.objects.all().delete()
-        Section.objects.all().delete()
         # Crawl documents
         crawl_task = form.crawl()
         # Set session

@@ -91,6 +91,6 @@ $(document).ready(function() {
     } else {
       pollState(crawl_task_id);
     }
-  },500);
+  },2000);
 
 });
