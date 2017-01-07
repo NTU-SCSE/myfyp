@@ -1,13 +1,14 @@
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.cache import cache
 from .forms import CrawlForm
 from celery.result import AsyncResult
 import json
 
 
-SESSION_EXPIRE_TIME = 60
+SESSION_EXPIRE_TIME = 30
+
 
 class AdminView(FormView):
     template_name = 'dsp_index/admin_page.html'
