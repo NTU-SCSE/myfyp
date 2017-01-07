@@ -22,8 +22,10 @@ class AdminView(FormView):
         Section.objects.all().delete()
         # Crawl documents
         crawl_task = form.crawl()
+        # Set session
         self.request.session.set_expiry(SESSION_EXPIRE_TIME)
         self.request.session['crawl_task_id'] = crawl_task.id
+
         return super(AdminView, self).form_valid(form)
 
 
