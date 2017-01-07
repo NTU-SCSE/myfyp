@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+.idea/
+dsp_index/__pycache__/
+dsp_index/migrations/
+dsp_search/__pycache__/
+dsp_search/migrations/
+dsp_search/templatetags/__pycache__/
+log/
+media/
+myfyp/__pycache__/
