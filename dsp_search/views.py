@@ -42,7 +42,12 @@ class PDFView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(PDFView, self).get_context_data(*args, **kwargs)
-        section_url = os.path.join(settings.MEDIA_URL, 'sections/{0}/{1}.pdf'.format(self.kwargs['book'], self.kwargs['section']))
-        context.update({'pdf_url': section_url})
+        if self.kwargs['section'] is None:
+            url = os.path.join(settings.MEDIA_URL, 'books/{0}.pdf'.format(self.kwargs['book']))
+        else:
+            url = os.path.join(settings.MEDIA_URL, 'sections/{0}/{1}.pdf'.
+                               format(self.kwargs['book'], self.kwargs['section']))
+        context.update({'pdf_url': url})
         return context
+
 
