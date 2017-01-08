@@ -1,4 +1,5 @@
 from django.db import models
+from treebeard.mp_tree import MP_Node
 
 
 class Book(models.Model):
@@ -23,8 +24,18 @@ class Section(models.Model):
         return "section {id}: {title}".format(id=self.section_id, title=self.title)
 
 
-class ConceptMapping(models.Model):
+class Concept(MP_Node):
+    label = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=255)
+
+    node_order_by = ['label', 'name']
+
+    def __str__(self):
+        return "{0} {1}".format(self.label, self.name)
+
+
+class ConceptMapping(models.Model):
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     term = models.CharField(max_length=255)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     nth_match = models.IntegerField()
@@ -33,4 +44,4 @@ class ConceptMapping(models.Model):
         return "concept mapping: ({sid}, {nth}, {term})->{concept}".format(sid=self.section.section_id,
                                                                            nth=self.nth_match,
                                                                            term=self.term,
-                                                                           concept=self.name)
+                                                                           concept=self.concept.concept_id)

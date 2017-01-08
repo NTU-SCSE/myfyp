@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dsp_search.apps.DspSearchConfig',
 
     'haystack',
+    'treebeard',
 ]
 
 MIDDLEWARE = [
