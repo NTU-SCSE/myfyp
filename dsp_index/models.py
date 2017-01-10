@@ -44,4 +44,4 @@ class ConceptMapping(models.Model):
         return "concept mapping: ({sid}, {nth}, {term})->{concept}".format(sid=self.section.section_id,
                                                                            nth=self.nth_match,
                                                                            term=self.term,
-                                                                           concept=self.concept.concept_id)
+                                                                           concept=self.concept.name)
