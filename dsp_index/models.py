@@ -1,5 +1,6 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
+from django.core.validators import validate_comma_separated_integer_list
 
 
 class Book(models.Model):
@@ -38,10 +39,13 @@ class ConceptMapping(models.Model):
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
     term = models.CharField(max_length=255)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
-    nth_match = models.IntegerField()
+    nth_match = models.CharField(max_length=100, validators=[validate_comma_separated_integer_list])
 
     def __str__(self):
         return "concept mapping: ({sid}, {nth}, {term})->{concept}".format(sid=self.section.section_id,
                                                                            nth=self.nth_match,
                                                                            term=self.term,
                                                                            concept=self.concept.name)
+
+    class Meta:
+        unique_together = ('concept', 'section',)

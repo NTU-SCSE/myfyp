@@ -52,7 +52,7 @@ $.fn.extend({
 
 $(document).ready(function(){
   // Initialization of treeviews
-  $('#conceptTree').treed();
+  $('#concept-tree').treed();
 
   var $window = $(window);
   var lastWindowWidth = $window.width();
