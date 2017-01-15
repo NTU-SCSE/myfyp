@@ -52,6 +52,8 @@ class SectionDetailsView(SearchView):
     def dictionarize_concept_hierarchy(self):
         # Get all concepts for the section
         concept_list = self.get_concept_list()
+        if not concept_list:
+            return None
         # Initialize dictionary. All concepts have the same root.
         root = concept_list[0].get_root()
         dict = {'id': root.pk, 'name': root.name, 'nth_match': [], 'children': []}

@@ -17,16 +17,16 @@ def crawl_task(self, book_id_list, version):
     release_lock = lambda: cache.delete(lock_id)
     if acquire_lock():
         try:
-            # print("start 10 sec")
-            # time.sleep(10)
-            # print("finish 10 sec")
+            print("start 10 sec")
+            time.sleep(10)
+            print("finish 10 sec")
 
-            # Delete all the entries in database
-            Book.objects.all().delete()
-            Section.objects.all().delete()
-            # Crawl books & sections
-            crawl_books(book_id_list)
-            crawl_sections(book_id_list, version)
+            # # Delete all the entries in database
+            # Book.objects.all().delete()
+            # Section.objects.all().delete()
+            # # Crawl books & sections
+            # crawl_books(book_id_list)
+            # crawl_sections(book_id_list, version)
         finally:
             release_lock()
         logger.info('All documents are successfully crawled.')
