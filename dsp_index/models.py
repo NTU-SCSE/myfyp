@@ -48,4 +48,4 @@ class ConceptMapping(models.Model):
                                                                            concept=self.concept.name)
 
     class Meta:
-        unique_together = ('concept', 'section',)
+        unique_together = ('concept', 'section', 'term',)
