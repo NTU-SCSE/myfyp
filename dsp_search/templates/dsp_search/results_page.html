@@ -4,12 +4,13 @@
 {% load dsp_search_extras %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_pages.css" %}">
+  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_shared.css" %}">
 {% endblock %}
 
 
 {% block js %}
-  <script src="{% static "dsp_search/js/results_details_pages.js" %}"></script>
+  <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
+  <script src="{% static "dsp_search/js/results_page.js" %}"></script>
 {% endblock %}
 
 
@@ -30,26 +31,26 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
-      <ul class="sidebar-nav" id="concept-tree">
+      <ul class="sidebar-nav" id="sidebar">
         <li class="sidebar-brand">
           Concept List
         </li>
         <li>Digital Signal Processing
           <ul>
-            <li>C1</li>
-            <li>C2
+            <li>C1 <span class="badge">14</span></li>
+            <li>C2 <span class="badge">27</span>
               <ul>
-                <li>C2.1
+                <li>C2.1<span class="badge">20</span>
                   <ul>
-                    <li>C2.1.1</li>
-                    <li>C2.1.2</li>
-                    <li>C2.1.3</li>
+                    <li>C2.1.1 <span class="badge">4</span></li>
+                    <li>C2.1.2 <span class="badge">6</span></li>
+                    <li>C2.1.3 <span class="badge">10</span></li>
                   </ul>
                 </li>
-                <li>C2.2</li>
+                <li>C2.2 <span class="badge">7</span></li>
               </ul>
             </li>
-            <li>C3</li>
+            <li>C3 <span class="badge">23</span></li>
           </ul>
         </li>
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from haystack.generic_views import SearchView
 from .forms import SectionSearchForm
 from dsp_index.models import ConceptMapping, Concept
@@ -36,7 +37,7 @@ class SectionDetailsView(SearchView):
         context = super(SectionDetailsView, self).get_context_data(*args, **kwargs)
         context.update({'book_id': self.kwargs['book'],
                         'section_id': self.kwargs['section'],
-                        'concept_tree': json.dumps(self.dictionarize_concept_hierarchy())})
+                        'concept_tree': mark_safe(json.dumps(self.dictionarize_concept_hierarchy()))})
         return context
 
     def get_concept_list(self):
@@ -56,10 +57,7 @@ class SectionDetailsView(SearchView):
             return None
         # Initialize dictionary. All concepts have the same root.
         root = concept_list[0].get_root()
-        dict = {'id': root.pk, 'name': root.name, 'nth_match': [], 'children': []}
-        mapping = ConceptMapping.objects.filter(concept=root.pk, section=self.kwargs['section'])
-        if mapping:
-            dict['nth_match'] = list(map(int, mapping[0].nth_match.split(',')))
+        dict = {'id': root.pk, 'name': root.name, 'children': []}
         # Build the dictionary
         for concept in concept_list:
             concept_path = self.get_concept_path(concept)
@@ -76,10 +74,7 @@ class SectionDetailsView(SearchView):
 
     def dictionarize_concept_path(self, concept_path):
         # Initialize dictionary
-        dict = {'id': concept_path[0].pk, 'name': concept_path[0].name, 'nth_match': [], 'children': []}
-        mapping = ConceptMapping.objects.filter(concept=concept_path[0].pk, section=self.kwargs['section'])
-        if mapping:
-            dict['nth_match'] = list(map(int, mapping[0].nth_match.split(',')))
+        dict = {'id': concept_path[0].pk, 'name': concept_path[0].name, 'children': []}
         # Recursive procedure
         if len(concept_path) == 1:
             return dict

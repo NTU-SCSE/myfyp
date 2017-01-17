@@ -23,7 +23,7 @@
 }
 .tree li {
   margin:0;
-  padding:0 1em;
+  padding-left:1em;
   line-height:2em;
   color: #3f3f3f;
   position:relative
@@ -149,6 +149,7 @@
   font-weight: 700;
   color: #f4511e;
   line-height: 60px;
+  padding-left:1em;
 }
 .sidebar-nav > .sidebar-brand a {
   color: #000;

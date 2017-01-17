@@ -2,16 +2,17 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_pages.css" %}">
+  <link rel="stylesheet" href="{% static "dsp_search/css/results_details_shared.css" %}">
   <link rel="stylesheet" href="{% static "dsp_search/css/details_page.css" %}">
 {% endblock %}
 
 
 {% block js %}
-  <script src="{% static "dsp_search/js/results_details_pages.js" %}"></script>
   <script type="text/javascript">
     var conceptTree = JSON.parse('{{ concept_tree }}');
   </script>
+  <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
+  <script src="{% static "dsp_search/js/details_page.js" %}"></script>
 {% endblock %}
 
 
@@ -31,27 +32,9 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
-      <ul class="sidebar-nav" id="concept-tree">
+      <ul class="sidebar-nav" id="sidebar">
         <li class="sidebar-brand">
           Related Concepts
-        </li>
-        <li>Digital Signal Processing
-          <ul>
-            <li>C1</li>
-            <li>C2
-              <ul>
-                <li>C2.1
-                  <ul>
-                    <li>C2.1.1</li>
-                    <li>C2.1.2</li>
-                    <li>C2.1.3</li>
-                  </ul>
-                </li>
-                <li>C2.2</li>
-              </ul>
-            </li>
-            <li>C3</li>
-          </ul>
         </li>
       </ul>
     </div>
