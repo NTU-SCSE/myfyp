@@ -1,13 +1,13 @@
 {% extends 'dsp_search/base.html' %}
 {% load static %}
 
-{% block css %}
+{% block more_css %}
   <link rel="stylesheet" href="{% static "dsp_search/css/results_details_shared.css" %}">
   <link rel="stylesheet" href="{% static "dsp_search/css/details_page.css" %}">
 {% endblock %}
 
 
-{% block js %}
+{% block more_js %}
   <script type="text/javascript">
     var conceptTree = JSON.parse('{{ concept_tree }}');
   </script>

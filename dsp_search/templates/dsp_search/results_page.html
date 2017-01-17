@@ -3,12 +3,13 @@
 {% load highlight %}
 {% load dsp_search_extras %}
 
-{% block css %}
+{% block more_css %}
   <link rel="stylesheet" href="{% static "dsp_search/css/results_details_shared.css" %}">
+  <link rel="stylesheet" href="{% static "dsp_search/css/results_page.css" %}">
 {% endblock %}
 
 
-{% block js %}
+{% block more_js %}
   <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
   <script src="{% static "dsp_search/js/results_page.js" %}"></script>
 {% endblock %}
