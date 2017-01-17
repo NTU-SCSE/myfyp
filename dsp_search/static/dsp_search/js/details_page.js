@@ -5,7 +5,7 @@ $(document).ready(function () {
     $li.append('No concept identified for this section');
     $li.appendTo("#sidebar");
   } else {
-    $li.append(conceptTree.name);
+    $li.append('<b>' + conceptTree.name + '</b>');
     $li.appendTo("#sidebar");
 
     var $ul = $('<ul></ul>');
@@ -27,7 +27,7 @@ function getList(item, $list) {
   if (item) {
     var $li = $('<li />');
     if (item.name) {
-      $li.append(item.name);
+      $li.append('<a href="#">' + item.name + '</a>');
     }
     if (item.children && item.children.length) {
       var $sublist = $("<ul/>");

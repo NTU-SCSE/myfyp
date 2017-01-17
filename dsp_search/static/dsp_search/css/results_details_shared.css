@@ -130,14 +130,12 @@
   list-style: none;
 }
 .sidebar-nav li a {
-  display: block;
+  display: inline-block;
   text-decoration: none;
-  color: #999999;
 }
 .sidebar-nav li a:hover {
   text-decoration: none;
-  color: #fff;
-  background: rgba(255,255,255,0.2);
+  color: #f4511e;
 }
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
