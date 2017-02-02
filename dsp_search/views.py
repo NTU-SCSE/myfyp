@@ -18,13 +18,27 @@ class SectionSearchView(SearchView):
     form_class = SectionSearchForm
     form_name = 'search_form'
 
+    def __init__(self, *args, **kwargs):
+        super(SectionSearchView, self).__init__(*args, **kwargs)
+        self.queryset = super(SectionSearchView, self).get_queryset()
+
     def get_results_count(self):
-        queryset = super(SectionSearchView, self).get_queryset()
-        return queryset.count()
+        return self.queryset.count()
+
+    def get_section_list(self):
+        section_list = [section.object.section_id for section in self.queryset]
+        return section_list
+
+    def get_concept_tree(self):
+        section_list = self.get_section_list()
+        generator = ConceptDictionaryGenerator(section_list)
+        dictionary = generator.dictionarize_concept_hierarchy()
+        return json.dumps(dictionary)
 
     def get_context_data(self, *args, **kwargs):
         context = super(SectionSearchView, self).get_context_data(*args, **kwargs)
-        context.update({'count': self.get_results_count()})
+        context.update({'count': self.get_results_count(),
+                        'concept_tree': mark_safe(self.get_concept_tree())})
         return context
 
 
@@ -33,15 +47,39 @@ class SectionDetailsView(SearchView):
     form_class = SectionSearchForm
     form_name = 'search_form'
 
+    def get_concept_tree(self):
+        generator = ConceptDictionaryGenerator([self.kwargs['section'],])
+        dictionary = generator.dictionarize_concept_hierarchy()
+        return json.dumps(dictionary)
+
     def get_context_data(self, *args, **kwargs):
         context = super(SectionDetailsView, self).get_context_data(*args, **kwargs)
         context.update({'book_id': self.kwargs['book'],
                         'section_id': self.kwargs['section'],
-                        'concept_tree': mark_safe(json.dumps(self.dictionarize_concept_hierarchy()))})
+                        'concept_tree': mark_safe(self.get_concept_tree())})
         return context
 
+
+class PDFView(TemplateView):
+    template_name = 'dsp_search/pdf_viewer.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(PDFView, self).get_context_data(*args, **kwargs)
+        if self.kwargs['section'] is None:
+            url = os.path.join(settings.MEDIA_URL, 'books/{0}.pdf'.format(self.kwargs['book']))
+        else:
+            url = os.path.join(settings.MEDIA_URL, 'sections/{0}/{1}.pdf'.
+                               format(self.kwargs['book'], self.kwargs['section']))
+        context.update({'pdf_url': url})
+        return context
+
+
+class ConceptDictionaryGenerator:
+    def __init__(self, section_list):
+        self.section_list = section_list
+
     def get_concept_list(self):
-        mappings = ConceptMapping.objects.filter(section=self.kwargs['section'])
+        mappings = ConceptMapping.objects.filter(section__in=self.section_list)
         concept_list = Concept.objects.filter(pk__in=mappings.values('concept'))
         return concept_list
 
@@ -82,19 +120,5 @@ class SectionDetailsView(SearchView):
             child = self.dictionarize_concept_path(concept_path[1:])
             dict['children'].append(child)
             return dict
-
-
-class PDFView(TemplateView):
-    template_name = 'dsp_search/pdf_viewer.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(PDFView, self).get_context_data(*args, **kwargs)
-        if self.kwargs['section'] is None:
-            url = os.path.join(settings.MEDIA_URL, 'books/{0}.pdf'.format(self.kwargs['book']))
-        else:
-            url = os.path.join(settings.MEDIA_URL, 'sections/{0}/{1}.pdf'.
-                               format(self.kwargs['book'], self.kwargs['section']))
-        context.update({'pdf_url': url})
-        return context
 
 

@@ -84,3 +84,25 @@ $(document).ready(function(){
 });
 
 
+function getList(item, $list) {
+  if($.isArray(item)){
+    $.each(item, function (key, value) {
+      getList(value, $list);
+    });
+    return;
+  }
+  if (item) {
+    var $li = $('<li />');
+    if (item.name) {
+      var $anchor = $('<a href="#">' + item.name + '</a>');
+      $anchor.attr('id', item.id);
+      $li.append($anchor);
+    }
+    if (item.children && item.children.length) {
+      var $sublist = $("<ul />");
+      getList(item.children, $sublist);
+      $li.append($sublist);
+    }
+    $list.append($li);
+  }
+}

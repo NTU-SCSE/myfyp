@@ -14,26 +14,14 @@ $(document).ready(function () {
   }
 
   $('#sidebar').treed();
+
+  // $( "#concept-tree li > a" ).click(function() {
+  //   var $pdfViewer = $('#pdf-viewer').contents();
+  //   // var $match = $pdfViewer.find("#viewer .textLayer > div:contains('networks')").eq(2);
+  //   // var newText = $match.text().replace("networks", "</span class='highlight selected'>networks<span>");
+  //   // console.log(newText);
+  //   // $match.html(newText);
+  //   });
 });
 
 
-function getList(item, $list) {
-  if($.isArray(item)){
-    $.each(item, function (key, value) {
-      getList(value, $list);
-    });
-    return;
-  }
-  if (item) {
-    var $li = $('<li />');
-    if (item.name) {
-      $li.append('<a href="#">' + item.name + '</a>');
-    }
-    if (item.children && item.children.length) {
-      var $sublist = $("<ul/>");
-      getList(item.children, $sublist);
-      $li.append($sublist);
-    }
-    $list.append($li);
-  }
-}
