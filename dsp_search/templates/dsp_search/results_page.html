@@ -11,7 +11,7 @@
 
 {% block more_js %}
   <script type="text/javascript">
-    var conceptTree = JSON.parse('{{ concept_tree }}');
+    var concept_tree = JSON.parse('{{ concept_tree }}');
   </script>
   <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
   <script src="{% static "dsp_search/js/results_page.js" %}"></script>
@@ -37,7 +37,7 @@
     <div id="sidebar-wrapper">
       <ul class="sidebar-nav" id="sidebar">
         <li class="sidebar-brand">
-          Concept List
+          Concept Map
         </li>
       </ul>
     </div>

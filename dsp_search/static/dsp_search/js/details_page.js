@@ -1,27 +1,33 @@
 $(document).ready(function () {
   var $li = $('<li id="concept-tree"></li>');
 
-  if (conceptTree == null) {
+  if (concept_tree == null) {
     $li.append('No concept identified for this section');
     $li.appendTo("#sidebar");
   } else {
-    $li.append('<b>' + conceptTree.name + '</b>');
+    $li.append('<b>' + concept_tree.name + '</b>');
     $li.appendTo("#sidebar");
 
     var $ul = $('<ul></ul>');
-    getList(conceptTree.children, $ul);
+    getList(concept_tree.children, $ul);
     $ul.appendTo("#concept-tree");
   }
 
   $('#sidebar').treed();
 
-  // $( "#concept-tree li > a" ).click(function() {
-  //   var $pdfViewer = $('#pdf-viewer').contents();
-  //   // var $match = $pdfViewer.find("#viewer .textLayer > div:contains('networks')").eq(2);
-  //   // var newText = $match.text().replace("networks", "</span class='highlight selected'>networks<span>");
-  //   // console.log(newText);
-  //   // $match.html(newText);
-  //   });
+  $( "#concept-tree li > a" ).click(function() {
+    var concept_id = this.id;
+    $.get('/mappings/', {section:section_id, concepts: JSON.stringify([concept_id])}, function(data){
+      
+      var terms = data[concept_id];
+      for (var i = 0; i < terms.length; i++) {
+        console.log(terms[i][0]);
+      }
+    }, "json");
+
+  });
 });
 
-
+// function highlightTerms() {
+//
+// }

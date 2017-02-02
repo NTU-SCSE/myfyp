@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -8,7 +9,7 @@ from dsp_index.models import ConceptMapping, Concept
 import os, json
 
 
-def view_home_page(request):
+def home_page(request):
     form = SectionSearchForm()
     return render(request, 'dsp_search/home_page.html', {'search_form': form})
 
@@ -120,5 +121,21 @@ class ConceptDictionaryGenerator:
             child = self.dictionarize_concept_path(concept_path[1:])
             dict['children'].append(child)
             return dict
+
+
+def concept_to_terms(request):
+    if request.method == 'GET':
+        section = request.GET['section']
+        concept_list = json.loads(request.GET['concepts'])
+        dictionary = {}
+
+        for concept in concept_list:
+            mappings = ConceptMapping.objects.filter(section=section, concept=concept)
+            dictionary[concept] = [item for item in mappings.values_list('term','nth_match')]
+
+        return HttpResponse(json.dumps(dictionary), content_type='application/json')
+
+
+
 
 

@@ -1,18 +1,18 @@
 // Acquire the CSRF token
 function getCookie(name) {
-  var cookieValue = null;
+  var cookie_value = null;
   if (document.cookie && document.cookie !== '') {
     var cookies = document.cookie.split(';');
     for (var i = 0; i < cookies.length; i++) {
       var cookie = jQuery.trim(cookies[i]);
       // Does this cookie string begin with the name we want?
       if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        cookie_value = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
     }
   }
-  return cookieValue;
+  return cookie_value;
 }
 
 var csrftoken = getCookie('csrftoken');
@@ -85,9 +85,9 @@ $(document).ready(function() {
   }
 
   // Poll state every 0.5 second
-  var refreshIntervalId = setInterval(function() {
+  var refresh_interval_id = setInterval(function() {
     if(stop == 1){
-      clearInterval(refreshIntervalId);
+      clearInterval(refresh_interval_id);
     } else {
       pollState(crawl_task_id);
     }

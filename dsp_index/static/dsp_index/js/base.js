@@ -8,9 +8,9 @@ $(document).ready(function(){
   // Expand sidebar on big window size
   $(window).on('resize', function(){
     const breakpoint = 768;
-    const windowWidth = $(window).width();
+    const window_width = $(window).width();
     const $wrapper = $('#wrapper');
-    if (windowWidth >= breakpoint && $wrapper.hasClass('toggled')) {
+    if (window_width >= breakpoint && $wrapper.hasClass('toggled')) {
       $wrapper.removeClass('toggled');
     }
   });

@@ -9,7 +9,8 @@
 
 {% block more_js %}
   <script type="text/javascript">
-    var conceptTree = JSON.parse('{{ concept_tree }}');
+    var concept_tree = JSON.parse('{{ concept_tree }}');
+    var section_id = {{ section_id }};
   </script>
   <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
   <script src="{% static "dsp_search/js/details_page.js" %}"></script>
