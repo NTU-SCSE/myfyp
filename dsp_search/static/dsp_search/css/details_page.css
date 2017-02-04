@@ -7,3 +7,11 @@
   margin-bottom: 0;
 }
 
+.tree li a.active {
+  padding: 3px 6px;
+  line-height: 1.5;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #46b8da;
+}
+

@@ -20,8 +20,8 @@
     <script src="{% static "dsp_search/pdfjs-1.5.188/build/pdf.js" %}"></script>
 
     <!-- PDF.js Viewer Layer Scripts & Styles -->
-    <script src="{% static "dsp_search/pdfjs-1.5.188/web/viewer.js" %}"></script>
-    <link rel="stylesheet" href="{% static "dsp_search/pdfjs-1.5.188/web/viewer.css" %}">
+    <script src="{% static "dsp_search/js/pdf_viewer.js" %}"></script>
+    <link rel="stylesheet" href="{% static "dsp_search/css/pdf_viewer.css" %}">
     <script>
       pdfjsWebLibs.pdfjsWebApp.PDFViewerApplication.open('{{ pdf_url }}');
     </script>
