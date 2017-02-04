@@ -33,7 +33,7 @@ $(document).ready(function () {
         shown.push(concept_id);
       } else {
         // GET the c2t mappings from server and add <span> to highlight the matched terms.
-        addSpanTohighlightTerms(concept_id);
+        addSpan(concept_id, true);
         mapped.push(concept_id);
         shown.push(concept_id);
       }
@@ -49,8 +49,15 @@ $(document).ready(function () {
 
 $(window).on('load', function(){
   var $pdfViewer = $('#pdf-viewer').contents();
-  $pdfViewer[0].addEventListener("pagerendered", function() {
-    // console.log('hi');
+
+  $pdfViewer[0].addEventListener("textlayerrendered", function() {
+    for (var i = 0; i < mapped.length; i++) {
+      if (shown.indexOf(mapped[i]) > -1) { // The concept is now highlighted in PDF.
+        addSpan(mapped[i], true);
+      } else {
+        addSpan(mapped[i], false);
+      }
+    }
   });
 });
 
@@ -63,17 +70,17 @@ function removeFromMapped(concept_id) {
 }
 
 
-function addSpanTohighlightTerms(concept_id) {
+function addSpan(concept_id, show_highlight) {
   $.get('/mappings/', {section: section_id, concepts: JSON.stringify([concept_id])}, function (data) {
     var terms = data[concept_id];
     for (var i = 0; i < terms.length; i++) {
-      addSpanForOneTerm(concept_id, terms[i][0], terms[i][1]);
+      addSpanForTerm(concept_id, terms[i][0], terms[i][1], show_highlight);
     }
   }, "json");
 }
 
 
-function addSpanForOneTerm(concept_id, term, nth_match) {
+function addSpanForTerm(concept_id, term, nth_match, show_highlight) {
   var $pdfViewer = $('#pdf-viewer').contents(),
       count = 0;
 
@@ -86,8 +93,11 @@ function addSpanForOneTerm(concept_id, term, nth_match) {
           count++;
           if (nth_match.indexOf(count) > -1) {
             var text = $(this).text(),
-                $span = $("<span class='highlight mapping'></span>");
+                $span = $("<span></span>");
             $span.attr("data-concept-id", concept_id);
+            if (show_highlight) {
+              $span.addClass("highlight mapping");
+            }
             $span.text(term);
             $(this).html(text.substr(0, matches[i]) + $span[0].outerHTML + text.substr(matches[i] + term.length));
           }
