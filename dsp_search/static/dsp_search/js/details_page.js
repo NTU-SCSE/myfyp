@@ -1,49 +1,79 @@
-var mapped = [], shown = [];
+var visited = [],
+    shown = [],
+    popped_cid,
+    hide_hl_disabled = [],
+    show_hl_disabled = [];
 
 
 $(document).ready(function () {
+
+  // Build the concept tree in sidebar
   var $li = $('<li id="concept-tree"></li>');
 
-  if (concept_tree == null) {
+  if (ctree_rnode == null) {
     $li.append('No concept identified for this section');
     $li.appendTo("#sidebar");
   } else {
-    $li.append('<b>' + concept_tree.name + '</b>');
+    $li.append('<b>' + ctree_rnode.name + '</b>');
     $li.appendTo("#sidebar");
 
     var $ul = $('<ul></ul>');
-    getList(concept_tree.children, $ul);
+    getList(ctree_rnode.children, $ul);
     $ul.appendTo("#concept-tree");
   }
 
-  $('#sidebar').treed();
+  $("#sidebar").treed();
 
-  $( "#concept-tree li > a" ).click(function() {
-    $(this).toggleClass("active");
-
-    var concept_id = this.id,
-        $pdf_viewer = $('#pdf-viewer').contents();
-
-    if ($(this).hasClass("active")) { // Show the term highlight in PDF. Two cases.
-      if (mapped.indexOf(concept_id) > -1) {
-        // C2t Mappings were retrieved before. Simply add two classes (.highlight & .mapping).
-        $pdf_viewer
-            .find("span[data-concept-id='" + concept_id + "']")
-            .addClass("highlight mapping");
-        shown.push(concept_id);
-      } else {
-        // GET the c2t mappings from server and add <span> to highlight the matched terms.
-        addSpan(concept_id, true);
-        mapped.push(concept_id);
-        shown.push(concept_id);
+  // Enable concept popover
+  var $li_a = $(".tree li a");
+  $li_a.popover({
+      html : true,
+      content: function() {
+        //TODO: hide_hl_disabled is an array of int.
+        if (hide_hl_disabled.indexOf(this.id) > -1) {
+          $("#concept-popover-content").find(".hide-highlight").attr('disabled');
+        }
+        return $("#concept-popover-content").html();
+      },
+      title: function() {
+        return $(this).text();
       }
-    } else { // Hide the term highlight in PDF. Simply remove two classes(.highlight & .mapping).
-      $pdf_viewer
-          .find("span[data-concept-id='" + concept_id + "']")
-          .removeClass("highlight mapping");
-      removeFromMapped(concept_id);
-    }
   });
+
+  $li_a.click(function() {    // Hide other concept popovers
+    popped_cid = this.id;
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // Hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
+      }
+    });
+  });
+});
+
+
+// Trigger actions when show-highlight anchor is clicked
+$(document).on('click', '.show-highlight', function() {
+  $('#'+popped_cid).removeClass('select-hide').addClass('select-show');
+  
+  
+});
+
+
+// Trigger actions when hide-highlight anchor is clicked
+$(document).on('click', '.hide-highlight', function() {
+  $('#'+popped_cid).removeClass('select-show').addClass('select-hide');
+  var node = findNode(ctree_rnode, popped_cid);
+  hide_hl_disabled = hide_hl_disabled.concat(getDescendants(node));
+});
+
+
+// Trigger actions when hide-highlight anchor is clicked
+$(document).on('click', '.reset-highlight', function() {
+  $('#'+popped_cid).removeClass('select-show select-hide');
 });
 
 
@@ -51,11 +81,11 @@ $(window).on('load', function(){
   var $pdf_viewer = $('#pdf-viewer').contents();
 
   $pdf_viewer.on("textlayerrendered", function() {
-    for (var i = 0; i < mapped.length; i++) {
-      if (shown.indexOf(mapped[i]) > -1) { // The concept is in shown[].
-        addSpan(mapped[i], true);
+    for (var i = 0; i < visited.length; i++) {
+      if (shown.indexOf(visited[i]) > -1) { // The concept is in shown[].
+        addSpan(visited[i], true);
       } else {
-        addSpan(mapped[i], false);
+        addSpan(visited[i], false);
       }
     }
   });
@@ -80,7 +110,7 @@ $(window).on('load', function(){
 });
 
 
-function removeFromMapped(concept_id) {
+function removeFromVisited(concept_id) {
   var index = shown.indexOf(concept_id);
   if (index > -1) {
     shown.splice(index, 1);

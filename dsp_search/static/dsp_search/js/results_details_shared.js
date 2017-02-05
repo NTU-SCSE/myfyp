@@ -95,9 +95,13 @@ function getList(item, $list) {
   if (item) {
     var $li = $('<li />');
     if (item.name) {
-      var $anchor = $('<a href="#">' + item.name + '</a>');
-      $anchor.attr('id', item.id);
-      $li.append($anchor);
+      var $a = $('<a href="#">' + item.name + '</a>');
+      $a.attr({
+        'id': item.id,
+        'data-toggle': 'popover',
+        'data-container': 'body'
+      });
+      $li.append($a);
     }
     if (item.children && item.children.length) {
       var $sublist = $("<ul />");
@@ -107,3 +111,32 @@ function getList(item, $list) {
     $list.append($li);
   }
 }
+
+
+function findNode(rnode, nid) {
+  if (rnode.id == nid) {
+    return rnode;
+  } else {
+    for (var i = 0; i < rnode.children.length; i++) {
+      var node = findNode(rnode.children[i], nid);
+      if (node !== null) {
+        return node;
+      }
+    }
+    return null;
+  }
+}
+
+
+function getDescendants(node) {
+  var id_list = [],
+      children = node.children;
+
+  for (var i = 0; i < children.length; i++) {
+    id_list.push(children[i].id);
+    $.merge(id_list, getDescendants(children[i]));
+  }
+
+  return id_list;
+}
+

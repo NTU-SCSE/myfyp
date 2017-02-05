@@ -9,7 +9,7 @@
 
 {% block more_js %}
   <script type="text/javascript">
-    var concept_tree = JSON.parse('{{ concept_tree }}');
+    var ctree_rnode = JSON.parse('{{ concept_tree }}');
     var section_id = {{ section_id }};
   </script>
   <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
@@ -40,6 +40,32 @@
       </ul>
     </div>
     <!-- /#sidebar-wrapper -->
+
+    <div id="concept-popover-content" class="hidden">
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+          <a href=".actions-tab" role="tab" data-toggle="tab">Actions</a>
+        </li>
+        <li>
+          <a href=".description-tab" role="tab" data-toggle="tab">Description</a>
+        </li>
+        <li>
+          <a href=".path-tab" role="tab" data-toggle="tab">Path</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active actions-tab">
+          <a class="show-highlight" href="#"><i class="glyphicon glyphicon-text-background"></i> Show highlight</a>
+          <a class="hide-highlight" href="#"><i class="glyphicon glyphicon-text-color"></i> Hide highlight</a>
+          <a class="reset-highlight" href="#"><i class="glyphicon glyphicon-share-alt"></i> Reset</a>
+        </div>
+        <div role="tabpanel" class="tab-pane description-tab">Description content ...</div>
+        <div role="tabpanel" class="tab-pane path-tab">Path content ...</div>
+      </div>
+    </div>
 
     <button type="button" class="btn btn-sidebar sharp" id="sidebar-toggle">
       <span class="glyphicon" id="arrow-icon"></span>
