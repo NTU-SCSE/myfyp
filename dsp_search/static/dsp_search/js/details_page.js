@@ -22,12 +22,12 @@ $(document).ready(function () {
     $(this).toggleClass("active");
 
     var concept_id = this.id,
-        $pdfViewer = $('#pdf-viewer').contents();
+        $pdf_viewer = $('#pdf-viewer').contents();
 
-    if ($(this).hasClass("active")) { // Show the term highlight in PDF.
+    if ($(this).hasClass("active")) { // Show the term highlight in PDF. Two cases.
       if (mapped.indexOf(concept_id) > -1) {
         // C2t Mappings were retrieved before. Simply add two classes (.highlight & .mapping).
-        $pdfViewer
+        $pdf_viewer
             .find("span[data-concept-id='" + concept_id + "']")
             .addClass("highlight mapping");
         shown.push(concept_id);
@@ -38,7 +38,7 @@ $(document).ready(function () {
         shown.push(concept_id);
       }
     } else { // Hide the term highlight in PDF. Simply remove two classes(.highlight & .mapping).
-      $pdfViewer
+      $pdf_viewer
           .find("span[data-concept-id='" + concept_id + "']")
           .removeClass("highlight mapping");
       removeFromMapped(concept_id);
@@ -48,17 +48,35 @@ $(document).ready(function () {
 
 
 $(window).on('load', function(){
-  var $pdfViewer = $('#pdf-viewer').contents();
+  var $pdf_viewer = $('#pdf-viewer').contents();
 
-  $pdfViewer[0].addEventListener("textlayerrendered", function() {
+  $pdf_viewer.on("textlayerrendered", function() {
     for (var i = 0; i < mapped.length; i++) {
-      if (shown.indexOf(mapped[i]) > -1) { // The concept is now highlighted in PDF.
+      if (shown.indexOf(mapped[i]) > -1) { // The concept is in shown[].
         addSpan(mapped[i], true);
       } else {
         addSpan(mapped[i], false);
       }
     }
   });
+
+  $pdf_viewer.find("#findbar").on("keydown", function(event) {
+    if (event.keyCode == 27) {  // Escape
+      clearFindField();
+    }
+  });
+
+  $pdf_viewer.find("#viewFind").on("click", function() {
+    if (!$(this).hasClass("toggled")) {
+      clearFindField();
+    }
+  });
+
+  function clearFindField() {
+    var $find_field = $pdf_viewer.find("#findInput");
+    $find_field.val('');
+    $find_field[0].dispatchEvent(new CustomEvent("input"));
+  }
 });
 
 
@@ -81,10 +99,10 @@ function addSpan(concept_id, show_highlight) {
 
 
 function addSpanForTerm(concept_id, term, nth_match, show_highlight) {
-  var $pdfViewer = $('#pdf-viewer').contents(),
+  var $pdf_viewer = $('#pdf-viewer').contents(),
       count = 0;
 
-  $pdfViewer
+  $pdf_viewer
       .find("#viewer .textLayer > div:icontains('" + term + "')")
       .each(function() {
         var matches = getImatchIndexes($(this).text(), term);
