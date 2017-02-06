@@ -178,8 +178,13 @@ function addSpanForTerm(concept_label, term, nth_match, show_highlight) {
           count++;
           if (nth_match.indexOf(count) > -1) {
             var text = $(this).text(),
-                $span = $("<span></span>");
-            $span.attr("data-concept-label", concept_label);
+                $span = $("<span></span>"),
+                cname = $(".tree li a[data-concept-label='" + concept_label + "']").text();
+
+            $span.attr({
+              "data-concept-label": concept_label,
+              "title": "Concept: " + cname
+            });
             if (show_highlight) {
               $span.addClass("highlight mapping");
             }
