@@ -1,8 +1,7 @@
 var visited = [],
     shown = [],
-    popped_cid,
-    hide_hl_disabled = [],
-    show_hl_disabled = [];
+    popped_concept_label,
+    actions_disabled = [];
 
 
 $(document).ready(function () {
@@ -29,10 +28,12 @@ $(document).ready(function () {
   $li_a.popover({
       html : true,
       content: function() {
-        //TODO: hide_hl_disabled is an array of int.
-        if (hide_hl_disabled.indexOf(this.id) > -1) {
-          $("#concept-popover-content").find(".hide-highlight").attr('disabled');
-        }
+        // var $actions = $("#concept-popover-content").find(".show-highlight, .hide-highlight, .reset-highlight");
+        // if (actions_disabled.indexOf($(this).data("concept-label")) > -1) {
+        //   $actions.attr('disabled', '');
+        // } else {
+        //   $actions.removeAttr('disabled');
+        // }
         return $("#concept-popover-content").html();
       },
       title: function() {
@@ -40,8 +41,8 @@ $(document).ready(function () {
       }
   });
 
-  $li_a.click(function() {    // Hide other concept popovers
-    popped_cid = this.id;
+  $li_a.click(function() {
+    popped_concept_label = $(this).data("concept-label").toString();
   });
 
   $('body').on('click', function (e) {
@@ -57,23 +58,59 @@ $(document).ready(function () {
 
 // Trigger actions when show-highlight anchor is clicked
 $(document).on('click', '.show-highlight', function() {
-  $('#'+popped_cid).removeClass('select-hide').addClass('select-show');
-  
-  
+  $('a[data-concept-label="' + popped_concept_label +'"]').removeClass('select-hide').addClass('select-show');
+
+  var clabel = popped_concept_label,
+      node = findNode(ctree_rnode, clabel),
+      clabel_list = [clabel],
+      $pdf_viewer = $('#pdf-viewer').contents();
+
+  clabel_list = clabel_list.concat(getDescendants(node));
+
+  for (var i = 0; i < clabel_list.length; i++) {
+
+    if (visited.indexOf(clabel_list[i]) > -1) {
+      // C2t Mappings were retrieved before. Simply add two classes (.highlight & .mapping).
+      $pdf_viewer
+          .find("span[data-concept-label='" + clabel_list[i] + "']")
+          .addClass("highlight mapping");
+      shown.push(clabel_list[i]);
+    } else {
+      // GET the c2t mappings from server and add <span> to highlight the matched terms.
+      addSpan(clabel_list[i], true);
+      visited.push(clabel_list[i]);
+      shown.push(clabel_list[i]);
+    }
+
+  }
 });
 
 
-// Trigger actions when hide-highlight anchor is clicked
-$(document).on('click', '.hide-highlight', function() {
-  $('#'+popped_cid).removeClass('select-show').addClass('select-hide');
-  var node = findNode(ctree_rnode, popped_cid);
-  hide_hl_disabled = hide_hl_disabled.concat(getDescendants(node));
-});
+// // Trigger actions when hide-highlight anchor is clicked
+// $(document).on('click', '.hide-highlight', function() {
+//   $('a[data-concept-label="' + popped_concept_label +'"]').removeClass('select-show').addClass('select-hide');
+//   var node = findNode(ctree_rnode, popped_concept_label);
+//   actions_disabled = actions_disabled.concat(getDescendants(node));
+// });
 
 
-// Trigger actions when hide-highlight anchor is clicked
+// Trigger actions when reset-highlight anchor is clicked
 $(document).on('click', '.reset-highlight', function() {
-  $('#'+popped_cid).removeClass('select-show select-hide');
+  $('a[data-concept-label="' + popped_concept_label +'"]').removeClass('select-show select-hide');
+
+  var clabel = popped_concept_label,
+      node = findNode(ctree_rnode, clabel),
+      clabel_list = [clabel],
+      $pdf_viewer = $('#pdf-viewer').contents();
+
+  clabel_list = clabel_list.concat(getDescendants(node));
+
+  for (var i = 0; i < clabel_list.length; i++) {
+    $pdf_viewer
+        .find("span[data-concept-label='" + clabel_list[i] + "']")
+        .removeClass("highlight mapping");
+    removeFromShown(cid_list[i]);
+  }
 });
 
 
@@ -110,25 +147,25 @@ $(window).on('load', function(){
 });
 
 
-function removeFromVisited(concept_id) {
-  var index = shown.indexOf(concept_id);
+function removeFromShown(concept_label) {
+  var index = shown.indexOf(concept_label);
   if (index > -1) {
     shown.splice(index, 1);
   }
 }
 
 
-function addSpan(concept_id, show_highlight) {
-  $.get('/mappings/', {section: section_id, concepts: JSON.stringify([concept_id])}, function (data) {
-    var terms = data[concept_id];
+function addSpan(concept_label, show_highlight) {
+  $.get('/mappings/', {section: section_id, concepts: JSON.stringify([concept_label])}, function (data) {
+    var terms = data[concept_label];
     for (var i = 0; i < terms.length; i++) {
-      addSpanForTerm(concept_id, terms[i][0], terms[i][1], show_highlight);
+      addSpanForTerm(concept_label, terms[i][0], terms[i][1], show_highlight);
     }
   }, "json");
 }
 
 
-function addSpanForTerm(concept_id, term, nth_match, show_highlight) {
+function addSpanForTerm(concept_label, term, nth_match, show_highlight) {
   var $pdf_viewer = $('#pdf-viewer').contents(),
       count = 0;
 
@@ -142,7 +179,7 @@ function addSpanForTerm(concept_id, term, nth_match, show_highlight) {
           if (nth_match.indexOf(count) > -1) {
             var text = $(this).text(),
                 $span = $("<span></span>");
-            $span.attr("data-concept-id", concept_id);
+            $span.attr("data-concept-label", concept_label);
             if (show_highlight) {
               $span.addClass("highlight mapping");
             }

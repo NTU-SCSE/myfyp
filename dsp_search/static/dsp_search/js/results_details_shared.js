@@ -97,7 +97,7 @@ function getList(item, $list) {
     if (item.name) {
       var $a = $('<a href="#">' + item.name + '</a>');
       $a.attr({
-        'id': item.id,
+        'data-concept-label': item.label,
         'data-toggle': 'popover',
         'data-container': 'body'
       });
@@ -113,12 +113,12 @@ function getList(item, $list) {
 }
 
 
-function findNode(rnode, nid) {
-  if (rnode.id == nid) {
+function findNode(rnode, nlabel) {
+  if (rnode.label == nlabel) {
     return rnode;
   } else {
     for (var i = 0; i < rnode.children.length; i++) {
-      var node = findNode(rnode.children[i], nid);
+      var node = findNode(rnode.children[i], nlabel);
       if (node !== null) {
         return node;
       }
@@ -129,14 +129,16 @@ function findNode(rnode, nid) {
 
 
 function getDescendants(node) {
-  var id_list = [],
+  var label_list = [],
       children = node.children;
 
   for (var i = 0; i < children.length; i++) {
-    id_list.push(children[i].id);
-    $.merge(id_list, getDescendants(children[i]));
+    label_list.push(children[i].label);
+    $.merge(label_list, getDescendants(children[i]));
   }
 
-  return id_list;
+  return label_list;
 }
+
+
 

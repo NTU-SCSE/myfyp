@@ -96,16 +96,16 @@ class ConceptDictionaryGenerator:
             return None
         # Initialize dictionary. All concepts have the same root.
         root = concept_list[0].get_root()
-        dict = {'id': root.pk, 'name': root.name, 'children': []}
+        dict = {'label': root.label, 'name': root.name, 'children': []}
         # Build the dictionary
         for concept in concept_list:
             concept_path = self.get_concept_path(concept)
             temp = dict
             # Add the concept path into current dictionary
             for index in range(1, len(concept_path)):
-                children_id = [d['id'] for d in temp['children']]
-                if concept_path[index].pk in children_id:
-                    temp = temp['children'][children_id.index(concept_path[index].pk)]
+                clabels = [d['label'] for d in temp['children']]
+                if concept_path[index].label in clabels:
+                    temp = temp['children'][clabels.index(concept_path[index].label)]
                 else:
                     temp['children'].append(self.dictionarize_concept_path(concept_path[index:]))
                     break
@@ -113,7 +113,7 @@ class ConceptDictionaryGenerator:
 
     def dictionarize_concept_path(self, concept_path):
         # Initialize dictionary
-        dict = {'id': concept_path[0].pk, 'name': concept_path[0].name, 'children': []}
+        dict = {'label': concept_path[0].label, 'name': concept_path[0].name, 'children': []}
         # Recursive procedure
         if len(concept_path) == 1:
             return dict
@@ -126,12 +126,12 @@ class ConceptDictionaryGenerator:
 def concept_to_terms(request):
     if request.method == 'GET':
         section = request.GET['section']
-        concept_list = json.loads(request.GET['concepts'])
+        clabel_list = json.loads(request.GET['concepts'])
         dictionary = {}
 
-        for concept in concept_list:
-            mappings = ConceptMapping.objects.filter(section=section, concept=concept)
-            dictionary[concept] = [item for item in mappings.values_list('term','nth_match')]
+        for label in clabel_list:
+            mappings = ConceptMapping.objects.filter(section=section, concept__label=label)
+            dictionary[label] = [item for item in mappings.values_list('term','nth_match')]
 
         return HttpResponse(json.dumps(dictionary), content_type='application/json')
 
