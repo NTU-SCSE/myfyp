@@ -15,29 +15,6 @@
   background-color: #008000;
 }
 
-.popover {
-  max-width: 500px;
-}
-
-.popover .tab-content a {
-  display: block;
-  padding: 3px 6px;
-  line-height: 1.5;
-}
-
-.popover .tab-content a:hover {
-  color: #f4511e;
-}
-
-.popover .tab-content a[disabled], .popover .tab-content a[disabled]:hover {
-  pointer-events: none;
-  color: #e1e1e1;
-}
-
-.popover .tab-pane {
-  margin-top: 10px;
-}
-
 .show-highlight, .show-highlight:visited {
   color: #008000;
 }

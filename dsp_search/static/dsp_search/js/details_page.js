@@ -51,7 +51,7 @@ $(document).ready(function () {
   });
 
   $li_a.click(function() {
-    clabel_popped = $(this).data("concept-label").toString();
+    clabel_popped = $(this).attr("data-concept-label");
   });
 
   $('body').on('click', function (e) {
@@ -134,7 +134,7 @@ $(document).on('click', '.hide-highlight', function() {
       $pdf_viewer
           .find("span[data-concept-label='" + clabel_list[i] + "']")
           .removeClass("highlight mapping");
-      removeFromSelected(clabel_list[i]);
+      selected = removeFromArray(clabel_list[i], selected);
     }
   }
 
@@ -173,14 +173,6 @@ $(window).on('load', function(){
     $find_field[0].dispatchEvent(new CustomEvent("input"));
   }
 });
-
-
-function removeFromSelected(concept_label) {
-  var index = selected.indexOf(concept_label);
-  if (index > -1) {
-    selected.splice(index, 1);
-  }
-}
 
 
 function addSpan(concept_label, show_highlight) {

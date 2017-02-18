@@ -141,4 +141,11 @@ function getDescendants(node) {
 }
 
 
+function removeFromArray(el, array) {
+  var index = array.indexOf(el);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+  return array;
+}
 

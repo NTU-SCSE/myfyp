@@ -52,15 +52,6 @@
   text-decoration: none;
   color:#3f3f3f;
 }
-.tree li button, .tree li button:active, .tree li button:focus {
-  text-decoration: none;
-  color:#3f3f3f;
-  border:none;
-  background:transparent;
-  margin: 0;
-  padding: 0;
-  outline: 0;
-}
 /* Highlight */
 .highlighted {
   font-weight: bold;
@@ -141,7 +132,6 @@
   text-decoration: none;
 }
 .sidebar-nav > .sidebar-brand {
-  height: 65px;
   font-size: 18px;
   font-weight: 700;
   color: #f4511e;
@@ -178,4 +168,27 @@
     position: relative;
     margin-right: 0;
   }
+}
+/* Popover */
+.popover {
+  max-width: 500px;
+}
+
+.popover .tab-content a {
+  display: block;
+  padding: 3px 6px;
+  line-height: 1.5;
+}
+
+.popover .tab-content a:hover {
+  color: #f4511e;
+}
+
+.popover .tab-content a[disabled], .popover .tab-content a[disabled]:hover {
+  pointer-events: none;
+  color: #e1e1e1;
+}
+
+.popover .tab-pane {
+  margin-top: 10px;
 }

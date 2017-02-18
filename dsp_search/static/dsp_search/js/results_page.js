@@ -1,28 +1,98 @@
+var filter_with = [],
+    filter_without = [],
+    clabel_popped;
+
+
 $(document).ready(function () {
   var $li = $('<li id="concept-tree"></li>');
 
-  if (concept_tree == null) {
+  if (ctree_rnode == null) {
     $li.append('No concept identified from search results');
     $li.appendTo("#sidebar");
   } else {
-    $li.append('<b>' + concept_tree.name + '</b>');
+    $li.append('<b>' + ctree_rnode.name + '</b>');
     $li.appendTo("#sidebar");
 
     var $ul = $('<ul></ul>');
-    getList(concept_tree.children, $ul);
+    getList(ctree_rnode.children, $ul);
     $ul.appendTo("#concept-tree");
   }
 
   getSectionCounts();
 
   $('#sidebar').treed();
+
+  // Enable concept popover
+  var $li_a = $(".tree li a");
+  $li_a.popover({
+    html : true,
+    content: function() {
+      var $popover = $("#concept-popover-content");
+      return $popover.html();
+    },
+    title: function() {
+      return $(this).text();
+    }
+  });
+
+  $li_a.click(function() {
+    clabel_popped = $(this).attr("data-concept-label");
+  });
+
+  $('body').on('click', function (e) {
+    $('[data-toggle=popover]').each(function () {
+      // Hide any open popovers when the anywhere else in the body is clicked
+      if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+        $(this).popover('hide');
+      }
+    });
+  });
+
+  $('#reset-all').on('click', function () {
+    for (var i = 0; i < filter_with.length; i++) {
+      $('a[data-concept-label="' + filter_with[i] +'"]').removeClass('filter-with');
+    }
+    for (var i = 0; i < filter_without.length; i++) {
+      $('a[data-concept-label="' + filter_without[i] +'"]').removeClass('filter-without');
+    }
+    filter_with = [];
+    filter_without = [];
+  });
+});
+
+
+// Trigger actions when with-concept anchor is clicked
+$(document).on('click', '.with-concept', function() {
+  $('a[data-concept-label="' + clabel_popped +'"]').addClass('filter-with');
+  filter_with.push(clabel_popped);
+});
+
+
+// Trigger actions when without-concept anchor is clicked
+$(document).on('click', '.without-concept', function() {
+  $('a[data-concept-label="' + clabel_popped +'"]').addClass('filter-without');
+  filter_without.push(clabel_popped);
+});
+
+
+// Trigger actions when reset anchor is clicked
+$(document).on('click', '.reset', function() {
+  $('a[data-concept-label="' + clabel_popped +'"]').removeClass('filter-with filter-without');
+  if (filter_with.indexOf(clabel_popped) > -1) {
+    filter_with = removeFromArray(clabel_popped, filter_with);
+  } else if (filter_without.indexOf(clabel_popped) > -1) {
+    filter_without = removeFromArray(clabel_popped, filter_without);
+  }
+
 });
 
 
 function getSectionCounts () {
   for (var label in section_counts) {
     if (section_counts.hasOwnProperty(label)) {
-      $('a[data-concept-label="' + label + '"]').append(" <span class='badge'>" + section_counts[label] + "</span>")
+      $('a[data-concept-label="' + label + '"]').after(function () {
+        return " <span class='badge'>" + section_counts[label] + "</span>";
+      });
     }
   }
 }

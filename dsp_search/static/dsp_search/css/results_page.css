@@ -3,5 +3,41 @@
 }
 .badge {
   background-color: #337ab7;
-  margin-left: 5px;
+  margin-left: 2px;
+}
+.tree li a.filter-with {
+  padding: 3px 6px;
+  line-height: 1.2;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #008000;
+}
+.tree li a.filter-without {
+  padding: 3px 6px;
+  line-height: 1.2;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #B22222;
+}
+.with-concept, .with-concept:visited {
+  color: #008000;
+}
+.without-concept, .without-concept:visited {
+  color: #B22222;
+}
+.reset, .reset:visited {
+  color: #b3bc27;
+}
+.without-concept span {
+  text-decoration: line-through;
+}
+#btn-filter {
+  text-align: right;
+  border-bottom: 2px solid #eee;
+}
+.btn-default {
+  border: 0;
+  border-radius: 0;
+  color: #337ab7;
+  padding: 3px 6px;
 }
