@@ -130,7 +130,6 @@
   list-style: none;
 }
 .sidebar-nav li a {
-  display: inline-block;
   text-decoration: none;
 }
 .sidebar-nav li a:hover {

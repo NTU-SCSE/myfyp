@@ -36,10 +36,17 @@ class SectionSearchView(SearchView):
         dictionary = generator.dictionarize_concept_hierarchy()
         return json.dumps(dictionary)
 
+    def get_section_counts(self):
+        section_list = self.get_section_list()
+        generator = ConceptDictionaryGenerator(section_list)
+        dictionary = generator.get_section_counts()
+        return json.dumps(dictionary)
+
     def get_context_data(self, *args, **kwargs):
         context = super(SectionSearchView, self).get_context_data(*args, **kwargs)
         context.update({'count': self.get_results_count(),
-                        'concept_tree': mark_safe(self.get_concept_tree())})
+                        'concept_tree': mark_safe(self.get_concept_tree()),
+                        'section_counts': mark_safe(self.get_section_counts())})
         return context
 
 
@@ -88,6 +95,32 @@ class ConceptDictionaryGenerator:
         path = list(concept.get_ancestors())
         path.append(concept)
         return path
+
+    def get_section_counts(self):
+        section_counts = {}
+        for sid in self.section_list:
+            related_clabels = self.get_related_concepts(sid)
+            for label in related_clabels:
+                if label not in section_counts:
+                    section_counts[label] = 1
+                else:
+                    section_counts[label] += 1
+        return section_counts
+
+    def get_related_concepts(self, sid):
+        mappings = ConceptMapping.objects.filter(section=sid)
+        concepts = Concept.objects.filter(pk__in=mappings.values('concept')).distinct()
+        ancestor_list = []
+        for concept in concepts:
+            ancestors = concept.get_ancestors()
+            for anc in ancestors:
+                if anc.label not in ancestor_list:
+                    ancestor_list.append(anc.label)
+        merged_list = ancestor_list
+        for concept in concepts:
+            if concept not in merged_list:
+                merged_list.append(concept.label)
+        return merged_list
 
     def dictionarize_concept_hierarchy(self):
         # Get all concepts for the section

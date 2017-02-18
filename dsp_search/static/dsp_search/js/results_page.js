@@ -13,5 +13,16 @@ $(document).ready(function () {
     $ul.appendTo("#concept-tree");
   }
 
+  getSectionCounts();
+
   $('#sidebar').treed();
 });
+
+
+function getSectionCounts () {
+  for (var label in section_counts) {
+    if (section_counts.hasOwnProperty(label)) {
+      $('a[data-concept-label="' + label + '"]').append(" <span class='badge'>" + section_counts[label] + "</span>")
+    }
+  }
+}

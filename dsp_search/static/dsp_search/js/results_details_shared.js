@@ -27,7 +27,7 @@ $.fn.extend({
     $tree.find('.branch .indicator').each(function(){
       $(this).on('click', function () {
         $(this).toggleClass(opened_class + " " + closed_class);
-        $(this).closest('li').children().children().toggle();
+        $(this).closest('li').children('ul').children().toggle();
       });
     });
 

@@ -1,3 +1,7 @@
 .alert-success {
   border: 0;
 }
+.badge {
+  background-color: #337ab7;
+  margin-left: 5px;
+}
