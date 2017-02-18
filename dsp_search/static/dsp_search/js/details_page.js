@@ -34,7 +34,13 @@ $(document).ready(function () {
         if (actions_disabled.indexOf($(this).attr("data-concept-label")) > -1) {
           $actions.attr('disabled', '');
         } else {
-          $actions.removeAttr('disabled');
+          if ($(this).hasClass('select-show')) {
+            $popover.find(".hide-highlight").removeAttr('disabled');
+            $popover.find(".show-highlight").attr('disabled', '');
+          } else {
+            $popover.find(".show-highlight").removeAttr('disabled');
+            $popover.find(".hide-highlight").attr('disabled', '');
+          }
         }
 
         return $popover.html();
@@ -61,7 +67,9 @@ $(document).ready(function () {
 
 // Trigger actions when show-highlight anchor is clicked
 $(document).on('click', '.show-highlight', function() {
-  $('a[data-concept-label="' + clabel_popped +'"]').removeClass('select-hide').addClass('select-show');
+  $('a[data-concept-label="' + clabel_popped +'"]').addClass('select-show');
+  $('a[class="show-highlight"]').attr('disabled', '');
+  $('a[class="hide-highlight"]').removeAttr('disabled');
 
   var clabel = clabel_popped,
       node = findNode(ctree_rnode, clabel),
@@ -98,6 +106,8 @@ $(document).on('click', '.show-highlight', function() {
 // Trigger actions when hide-highlight anchor is clicked
 $(document).on('click', '.hide-highlight', function() {
   $('a[data-concept-label="' + clabel_popped +'"]').removeClass('select-show');
+  $('a[class="hide-highlight"]').attr('disabled', '');
+  $('a[class="show-highlight"]').removeAttr('disabled');
 
   var clabel = clabel_popped,
       node = findNode(ctree_rnode, clabel),

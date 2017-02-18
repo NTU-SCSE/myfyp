@@ -15,14 +15,6 @@
   background-color: #008000;
 }
 
-.tree li a.select-hide {
-  padding: 3px 6px;
-  line-height: 1.2;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #B22222;
-}
-
 .popover {
   max-width: 500px;
 }
