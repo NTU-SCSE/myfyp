@@ -31,7 +31,7 @@
 .without-concept span {
   text-decoration: line-through;
 }
-#btn-filter {
+#btn-panel {
   text-align: right;
   border-bottom: 2px solid #eee;
 }

@@ -48,6 +48,14 @@ $(document).ready(function () {
     });
   });
 
+
+  $('#filter').on('click', function () {
+    var with_str = encodeURIComponent(JSON.stringify(filter_with)),
+        without_str = encodeURIComponent(JSON.stringify(filter_without));
+    window.open("/results/?q=" + query + "&with=" + with_str + "&without=" + without_str, "_self");
+  });
+
+
   $('#reset-all').on('click', function () {
     for (var i = 0; i < filter_with.length; i++) {
       $('a[data-concept-label="' + filter_with[i] +'"]').removeClass('filter-with');

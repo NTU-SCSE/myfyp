@@ -11,8 +11,9 @@
 
 {% block more_js %}
   <script type="text/javascript">
-    var ctree_rnode = JSON.parse('{{ concept_tree }}');
-    var section_counts = JSON.parse('{{ section_counts }}');
+    var ctree_rnode = JSON.parse('{{ concept_tree }}'),
+        section_counts = JSON.parse('{{ section_counts }}'),
+        query = '{{ query }}';
   </script>
   <script src="{% static "dsp_search/js/results_details_shared.js" %}"></script>
   <script src="{% static "dsp_search/js/results_page.js" %}"></script>
@@ -41,9 +42,9 @@
           Concept Map
         </li>
 
-        <li id="btn-filter">
+        <li id="btn-panel">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default">Filter</button>
+            <button id="filter" type="button" class="btn btn-default">Filter</button>
             <button id="reset-all" type="button" class="btn btn-default">Reset All</button>
           </div>
         </li>
