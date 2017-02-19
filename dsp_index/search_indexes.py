@@ -6,6 +6,7 @@ class SectionIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     book = indexes.CharField(model_attr='book', faceted=True)
     page = indexes.CharField(model_attr='page')
+    sid = indexes.CharField(model_attr='section_id')
     # Add content_auto for autocomplete
     content_auto = indexes.EdgeNgramField(model_attr='text')
 

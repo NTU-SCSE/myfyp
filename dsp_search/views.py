@@ -19,10 +19,6 @@ class SectionSearchView(SearchView):
     form_class = SectionSearchForm
     form_name = 'search_form'
 
-    def __init__(self, *args, **kwargs):
-        super(SectionSearchView, self).__init__(*args, **kwargs)
-        self.queryset = super(SectionSearchView, self).get_queryset()
-
     def get_results_count(self):
         return self.queryset.count()
 

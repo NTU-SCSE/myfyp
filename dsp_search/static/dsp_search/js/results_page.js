@@ -22,6 +22,8 @@ $(document).ready(function () {
 
   $('#sidebar').treed();
 
+  setPageNavHref();
+
   // Enable concept popover
   var $li_a = $(".tree li a");
   $li_a.popover({
@@ -104,3 +106,37 @@ function getSectionCounts () {
     }
   }
 }
+
+
+function setPageNavHref() {
+  var $a_prev = $('#a-prev'),
+      $a_next = $('#a-next'),
+      params = getURLParameters(),
+      prev_href = "?",
+      next_href = "?";
+
+  for (var key in params) {
+    if (key != "page" && params.hasOwnProperty(key)) {
+      prev_href = prev_href.concat(key + "=" + params[key] + "&");
+      next_href = next_href.concat(key + "=" + params[key] + "&");
+    }
+  }
+  prev_href = prev_href.concat("page=" + $a_prev.attr("data-prev-page-num"));
+  next_href = next_href.concat("page=" + $a_next.attr("data-next-page-num"));
+
+  $a_prev.attr('href', prev_href);
+  $a_next.attr('href', next_href);
+}
+
+
+function getURLParameters() {
+  var paramURL = window.location.search.substring(1),
+      params = paramURL.split('&'),
+      object = {};
+  for (var i = 0; i < params.length; i++) {
+    var param = params[i].split('=');
+    object[param[0]] = param[1]
+  }
+  return object;
+}
+
