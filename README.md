@@ -1,3 +1,3 @@
 # myfyp
 
-An intelligent search engine for text in the domain of digital signal processing 
+An information retrieval system in the domain of digital signal processing with the use of concept ontology 
